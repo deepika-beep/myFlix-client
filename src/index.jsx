@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
-class MyFlixApplication extends React.component{
+class MyFlixApplication extends React.Component{
   render(){
     return (
       <div className='my-flix'>
