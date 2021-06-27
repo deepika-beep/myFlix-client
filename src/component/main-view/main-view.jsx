@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {MovieCard} from '../movie-card/movie-card';
 import  {MovieView} from '../movie-view/movie-view';
 export class MainView extends React.Component{
@@ -14,6 +15,16 @@ export class MainView extends React.Component{
        selectedMovie:null
      };
    }
+  //  componentDidMount(){
+  //    axios.get('https://myflix-movies-api.herokuapp.com/movies')
+  //    .then(response=>{
+  //      this.setState({
+  //        movies:response.data
+  //      });
+  //    }).catch (error=>{
+  //      console.log(error);
+  //    });
+  //  }
    setSelectedMovie(newSelectedMovie){
      this.setState({
        selectedMovie:newSelectedMovie
@@ -24,7 +35,7 @@ export class MainView extends React.Component{
     
     
     if (movies.length===0)
-    return <div className ='main-view'>the list is empty</div>;
+    return <div className ='main-view'></div>;
     // display list of movie cards
     { /* added custom attribute movieData to use movie data within MovieCard component */}
  {/* To refer to the setSelectedMovie method, use this.setSelectedMovie */}
