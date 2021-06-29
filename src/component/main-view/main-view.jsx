@@ -12,7 +12,7 @@ export class MainView extends React.Component{
     // initial state set to null
      this.state={
        movies:[],
-      
+      showLoginForm:true,
        selectedMovie:null,
       //  when user has not logged in or is logged out 
         user:null
@@ -28,6 +28,13 @@ export class MainView extends React.Component{
        console.log(error);
      });
    }
+   toggleForms=()=>{
+     console.log('test');
+     this.setState({
+       showLoginForm:!this.state.showLoginForm
+      // user:null
+     })
+   }
   //  when a movie is clicked ,this function is invoked and updates the state of 'selectedMovie' property to that movie
    setSelectedMovie(newSelectedMovie){
      this.setState({
@@ -41,9 +48,10 @@ export class MainView extends React.Component{
     });
   }
   render(){
-    const {movies,selectedMovie} = this.state.user;
+    const {movies,selectedMovie,user,showLoginForm} = this.state;
     // If there is no user ,LoginView is rendered.If there is a user loggedin,the user derails are passed as a prop to the LoginView
-    if(!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
+    if(!user && showLoginForm) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} toggleForms={()=>this.toggleForms()}/>
+    if(!user && showLoginForm === false) return <RegistrationView toggleForms={()=>this.toggleForms()}/>
     if (movies.length===0)
     return <div className ='main-view'></div>;
     // display list of movie cards
