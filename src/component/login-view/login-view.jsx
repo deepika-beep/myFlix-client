@@ -2,16 +2,15 @@
 import React,{useState} from 'react';
 export function LoginView(props){
   // useState() method is initial value of login variable,returns an array assigning current value to username,setUsername  variable a method to  update username variable.
-  const[username,setUsername] = useState('');
-  const[password,setPassword] = useState('');
-
+  const[username,setUsername]=useState('');
+  const[password,setPassword]=useState('');
+}
+  
 // handleSubmit will log username and password into console
-const handleSubmit = (e) =>{
+const handleSubmit = () =>{
   e.preventDefault();
   console.log(username,password);
-   // allow users to be automatically logged in
-   props.onLoggedIn(username); 
- 
+  // props.onLoggedIn(username); allow users to be automatically logged in
 }
  return(
    <form>
@@ -23,4 +22,3 @@ const handleSubmit = (e) =>{
        <button type='submit' onClick={handleSubmit}>Submit</button>
        </form>
  )
-}
