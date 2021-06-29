@@ -46,9 +46,10 @@ export function RegistrationView(props) {
         </label>
       </label>
       <button type="submit" onClick={handleSubmit}>
-        <button onClick={() => { onBackClick(null); }}>Back</button>
         Submit
       </button>
+      {/* <button onClick={() => { onBackClick(null); }}>Back</button> */}
+      <button type='button' onClick={props.toggleForms}>If you have an Account login</button>
     </form>
   );
 }
