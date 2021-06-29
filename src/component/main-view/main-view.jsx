@@ -4,6 +4,7 @@ import axios from 'axios';
 import {LoginView} from '../login-view/login-view';
 import {MovieCard} from '../movie-card/movie-card';
 import  {MovieView} from '../movie-view/movie-view';
+import {RegistrationView} from '../registration-view/registration-view';
 export class MainView extends React.Component{
    constructor(){
     //  call the constructor of parent class
@@ -13,8 +14,8 @@ export class MainView extends React.Component{
        movies:[],
       
        selectedMovie:null,
-      //  when user has not loggeg in or is logged out 
-       user:null
+      //  when user has not logged in or is logged out 
+        user:null
      }
    }
    componentDidMount(){
@@ -34,13 +35,13 @@ export class MainView extends React.Component{
      });
    }
   //  when a user logs in ,this function updates the  'user' property to that particular user
-  onLoggegIn(user){
+  onLoggedIn(user){
     this.setState({
       user
     });
   }
   render(){
-    const {movies,selectedMovie} = this.state;
+    const {movies,selectedMovie} = this.state.user;
     // If there is no user ,LoginView is rendered.If there is a user loggedin,the user derails are passed as a prop to the LoginView
     if(!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
     if (movies.length===0)
