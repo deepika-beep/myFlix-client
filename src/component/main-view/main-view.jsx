@@ -5,6 +5,16 @@ import {LoginView} from '../login-view/login-view';
 import {MovieCard} from '../movie-card/movie-card';
 import  {MovieView} from '../movie-view/movie-view';
 import {RegistrationView} from '../registration-view/registration-view';
+import { DirectorView } from '../director-view/director-view';
+import { GenreView } from '../genre-view/genre-view';
+import  Button  from 'react-bootstrap/Button';
+import Card  from 'react-bootstrap/Card';
+import  Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import './main-view.scss';
+
 export class MainView extends React.Component{
    constructor(){
     //  call the constructor of parent class
@@ -17,7 +27,7 @@ export class MainView extends React.Component{
       //  when user has not logged in or is logged out 
         user:null
      }
-   }
+    }
    componentDidMount(){
      axios.get('https://myflix-movies-api.herokuapp.com/movies')
      .then(response=>{
@@ -54,20 +64,29 @@ export class MainView extends React.Component{
     if(!user && showLoginForm === false) return <RegistrationView toggleForms={()=>this.toggleForms()}/>
     if (movies.length===0)
     return <div className ='main-view'></div>;
+  
     // display list of movie cards
-    { /* added custom attribute movieData to use movie data within MovieCard component */}
- {/* To refer to the setSelectedMovie method, use this.setSelectedMovie */}
+    //  added custom attribute movieData to use movie data within MovieCard component 
+//  To refer to the setSelectedMovie method, use this.setSelectedMovie 
+// wrap each MovieCard within a Col Bootstrap component
     return(
-    <div className ='main-view'>
+       <Row className='justify-content-md-center'>
       {selectedMovie ?
+      (
+      <Col md={8}>
       <MovieView movieData={selectedMovie} onBackClick={newSelectedMovie =>{this.setSelectedMovie(newSelectedMovie);}}/>
+      </Col>
+      )
       
- 
-     : movies.map(movie =>(<MovieCard key={movie._id} movieData={movie} onMovieClick={(movie)=> {this.setSelectedMovie(movie)}}/>))
-      }
-    </div>
+     : 
+       movies.map(movie =>(
+        <Col md={3}>
+          <MovieCard key={movie._id} movieData={movie} onMovieClick={newSelectedmovie => {this.setSelectedMovie(newSelectedMovie);}}/>
+         </Col>
+        ))}
+     </Row>
     );
   }}
-
 // export keyword exposes the MainView component
-export default MainView;
+ export default MainView;
+       
