@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 export function RegistrationView(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -12,44 +13,44 @@ export function RegistrationView(props) {
   };
 
   return (
-    <form>
-      <label>
-        Username:
-        <input
-          type="text"
-          value={username}
+    <Form className='Register-Form'>
+      <Form.Group controlId="formUsername">
+     <Form.Label>Username:</Form.Label>
+       <Form.Control type="text" placeholder ='enter Username' value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-      </label>
-      <label>
-        Create Password:
-        <input
-          type="password"
-          value={password}
+      </Form.Group>
+
+      <Form.Group controlId="formPassword">
+      <Form.Label>Create Password:</Form.Label>
+       <Form.Control  type="password" placeholder ='enter password' value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <label>
-          Email:
-          <input
+        </Form.Group>
+       <Form.Group controlId="formGroupEmail">
+        <Form.Label> Email:</Form.Label>
+         
+          <Form.Control 
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-        </label>
-        <label>
-          Birthday:
-          <input
+          </Form.Group>
+      
+        <Form.Group controlId="formBirthday">
+            <Form.Label>Birthday:</Form.Label>
+         <Form.Control 
             type="date"
             value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
           />
-        </label>
-      </label>
+          </Form.Group>
+      
       <button type="submit" onClick={handleSubmit}>
         Submit
       </button>
       {/* <button onClick={() => { onBackClick(null); }}>Back</button> */}
       <button type='button' onClick={props.toggleForms}>If you have an Account login</button>
-    </form>
+    </Form>
   );
 }
