@@ -1,4 +1,7 @@
 import React from 'react';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+
+import Button from 'react-bootstrap/Button';
 export class MovieView extends React.Component{
 
   // To be able to refer to the callback function, create a new keypressCallback() component method. 
@@ -28,7 +31,7 @@ export class MovieView extends React.Component{
       <span className = 'label'>Description:</span>
       <span className = 'value'>{movieData.Description}</span>
       </div>
-      
+     
       <button variant ='link' onClick = {() => {onBackClick(null);}}>Back</button>
       </div>
       </Jumbotron>
