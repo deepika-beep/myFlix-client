@@ -14,7 +14,7 @@ export class MovieCard extends React.Component{
   <Card.Body>
     <Card.Title>{movieData.Title}</Card.Title>
     <Card.Text>{movieData.Description}</Card.Text>
-    <Button variant="link" onClick={()=>{onMovieClick(movieData)}}>Open</Button>
+    <Button variant="link" onClick={()=>{onMovieClick(movieData)}}>Click here</Button>
   </Card.Body>
    </Card>
    );
@@ -36,7 +36,7 @@ movieData:PropTypes.shape({
     Name: PropTypes.string.isRequired,
       Bio: PropTypes.string.isRequired,
       Birth: PropTypes.string.isRequired,
-      Death:PropTypes.string.isRequired
+      
   }),
 }).isRequired,
 onMovieClick:PropTypes.func.isRequired
