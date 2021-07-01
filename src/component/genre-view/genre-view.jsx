@@ -1,5 +1,5 @@
 import React from 'react';
-import { Jumbotron } from 'react-bootstrap';
+import  Jumbotron  from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
 import './genre-view.scss';
 
@@ -25,9 +25,3 @@ export class GenreView extends React.Component {
     );
   }
 }
-GenreView.propTypes = {
-  genre: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired
-  }),onBackClick: PropTypes.func.isRequired
-};
