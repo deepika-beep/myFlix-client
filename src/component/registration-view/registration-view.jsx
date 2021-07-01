@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 export function RegistrationView(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +14,7 @@ export function RegistrationView(props) {
   };
 
   return (
-    <Form className='Register-Form'>
+    <Form>
       <Form.Group controlId="formUsername">
      <Form.Label>Username:</Form.Label>
        <Form.Control type="text" placeholder ='enter Username' value={username}
