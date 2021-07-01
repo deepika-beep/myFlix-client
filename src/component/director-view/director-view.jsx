@@ -1,5 +1,5 @@
 import React from 'react';
-import { Jumbotron } from 'react-bootstrap';
+import Jumbotron  from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import './director-view.scss';
@@ -10,7 +10,7 @@ export class DirectorView extends React.Component {
     const { director, onBackClick } = this.props;
 
     return (
-      <Jumbotron fluid className="Director-View">
+      <Jumbotron fluid className='director'>
         <div className="director-view">
           <div className="director-name">
             <span className="label">Director: </span>
@@ -24,10 +24,7 @@ export class DirectorView extends React.Component {
             <span className="label">DOB: </span>
             <span className="value">{director.Birth}</span>
           </div>
-          <div className="director-death">
-            <span className="label">DOD: </span>
-            <span className="value">{director.Death}</span>
-          </div>
+          
           <Button variant="link" onClick={() => { onBackClick(null); }}>Back</Button>
         </div>
       </Jumbotron>
@@ -40,7 +37,7 @@ DirectorView.propTypes = {
     Name: PropTypes.string.isRequired,
     Bio: PropTypes.string.isRequired,
     Birth: PropTypes.string.isRequired,
-     Death: PropTypes.string.isRequired
+   
   }),
   onBackClick: PropTypes.func.isRequired
 };
