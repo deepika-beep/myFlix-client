@@ -37,7 +37,9 @@ export class MainView extends React.Component{
      }).catch (error=>{
        console.log(error);
      });
-   }
+  //  The auth information received from the handleSubmit method—the token and the user—is saved in localStorage
+  
+    }
    toggleForms=()=>{
      console.log('test');
      this.setState({
@@ -52,10 +54,21 @@ export class MainView extends React.Component{
      });
    }
   //  when a user logs in ,this function updates the  'user' property to that particular user
-  onLoggedIn(user){
-    this.setState({
-      user
-    });
+  // The parameter has been renamed from user to authData,to use both the user and the token.
+  onLoggedIn(authData){
+   console.log(authData);
+   this.setState({
+    user:authData.user.Username
+   });
+    localStorage.setItem('token',authData.token);
+   localStorage.setItem('user',authData.user.Username);
+   this.getMovies(authData);
+  }
+
+  getMovies(token){
+    axios.get('https://myflix-movies-api.herokuapp.com/movies',{
+      headers:{Authorization:`Bearer ${token}`}
+    })
   }
   render(){
     const {movies,selectedMovie,user,showLoginForm} = this.state;
