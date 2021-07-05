@@ -17,15 +17,19 @@ export function LoginView(props){
 const handleSubmit = (e) =>{
   e.preventDefault();
   // send request to server for authentication
+  // props.onLoggedIn(username) has been changed to props.onLoggedIn(data) because we need the token as well as the username.
+  // when a user clicks on the submit button of the login form, a POST request is made to the login endpoint of your myFlix API using Axios.
   axios.post('https://myflix-movies-api.herokuapp.com/login',{
     Username:username,
     Password:password
-  }).then(response =>{
+  })
+  .then(response =>{
     const data = response.data;
     props.onLoggedIn(data);
-  }).catch(e => {
-    console.log('no such user');
   })
+  .catch(e => {
+    console.log('no such user');
+  });
   // console.log(username,password);
   //  allow users to be automatically logged in
   //  props.onLoggedIn(username); 
