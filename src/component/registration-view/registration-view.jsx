@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import axios from "axios";
 export function RegistrationView(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -10,7 +11,22 @@ export function RegistrationView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password, email, birthday);
+    axios.post('https://myflix-movies-api.herokuapp.com/users',{
+      Username:username,
+      Password:password,
+      Email:email,
+      Birthday:birthday
+    })
+    .then (response =>{
+      const data =response.data;
+      console.log(data);
+      // // the second argument '_self' is necessary so that the page will open in the current tab
+      window.open('/','_self');
+    })
+    .catch(e =>{
+      console.log('error registering the user');
+    })
+
   };
 
   return (
