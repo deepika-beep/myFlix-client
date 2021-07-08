@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Container } from 'react-bootstrap';
-import{Button,Form,Col,Row} from 'react-bootstrap';
+import{Button} from 'react-bootstrap/Button';
+import{Form} from 'react-bootstrap/Form';
 import {Link} from 'react-router-dom';
-import { Jumbotron } from 'react-bootstrap';
-import {Card,FormControl} from 'react-bootstrap';
-import { MovieView } from '../movie-view/movie-view';
+import {FormControl} from 'react-bootstrap';
+
 
 export function ProfileView({userProfile,userToken,onDelete,onUpdate,movies,onMovieDelete}){
   const[newUsername,updateUsername] = useState('');
@@ -101,7 +101,7 @@ const {username,email,birthday,favoritemovies} =userProfile;
       clearForm()
     }).catch(err=>{
       console.log(err + 'update failed');
-      setFeedback('submission failed');
+
     })
 
     // delete account
@@ -134,13 +134,14 @@ const filterMovies = movies.filter(m =>{
 })
 return(
   <div className="profile-view">
+     <div className="user-profile">
     <div className="user-info">
       <span className="label">Username:</span>
-<span className='value'>{username}</span>
+    <span className='value'>{username}</span>
     </div>
 <div className="user-info">
   <span className='label'>Email:</span>
-  <span className='value'>{email}</span>
+  <span className='value'>{email}</span>  
 </div>
 <div className="user-info">
   <span className='label'>Birthday:</span>
@@ -154,7 +155,46 @@ return(
     </ul>
 </div>
   </div>
-)
+
 <Form className= 'update-info'>
-  <>
-}
+   <Form.Group controlId="formUsername">
+        <Form.Label>New-username:</Form.Label>
+        <FormControl type ='text' value={newUsername} onChange={(e) =>{updateUsername(e.target.value), validateUsername(e)}}/>
+   </Form.Group>
+
+   <Form.Group controlId="formPassword">
+        <Form.Label>New-Password:</Form.Label>
+        <FormControl type ='text' value={newUsername} onChange={(e) =>{updatePassword(e.target.value), validatePassword(e)}}/>
+   </Form.Group>
+
+   <Form.Group controlId="formEmail">
+      <Form.Label>New-email:</Form.Label>
+       <Form.Control type="email"  value={newEmail} onChange={(e) => {updateEmail(e.target.value),  validateMail(e)}} />
+        </Form.Group>
+
+      <Form.Group controlId="formBirthday">
+        <Form.Label>Birthday:</Form.Label>
+          <Form.Control type="email"  value={newBirthday} onChange={(e) => {updateBirthday(e.target.value),  validateBirthday(e)}} />
+       </Form.Group>
+
+       <div className="button-wrapper">
+          <Button variant="primary"  type="submit" onClick={updateUser} >Update details</Button>
+          <Button variant="danger"  type="button" onClick={deleteUser} >Delete account</Button>
+      </div>
+   </Form>
+   </div>
+ ) 
+      ProfileView.propTypes ={
+        movies:PropTypes.array.isRequired,
+        userProfile:PropTypes.shape({
+          username:PropTypes.string.isRequired,
+          email:PropTypes.string.isRequired,
+          favoritemovies:PropTypes.array.isRequired,
+          _id:PropTypes.string
+        }).isRequired,
+        userToken:PropTypes.string.isRequired,
+        onDelete:PropTypes.func.isRequired,
+        onUpdate:PropTypes.func.isRequired,
+        onMovieDelete:PropTypes.func.isRequired
+      }
+      
