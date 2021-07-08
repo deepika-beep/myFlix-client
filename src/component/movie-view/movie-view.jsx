@@ -1,19 +1,31 @@
 import React from 'react';
 import Jumbotron from 'react-bootstrap/Jumbotron';
-
+import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
+import './movie-view.scss';
+import axios from 'axios';
 export class MovieView extends React.Component{
-
-  // To be able to refer to the callback function, create a new keypressCallback() component method. 
-  keypressCallback(event){
-    console.log(event.key);
+  constructor(props){
+    super(props);
+    this.state ={
+      
+    };
   }
-  componentDidMount(){
-    document.addEventListener('keypress',this.keypressCallback );
-    }
-    componentWillUnmount(){
-      document.removeEventListener('keypress',this.keypressCallback);
-    }
+
+  addFavorite(movie){
+    const token = localStorage.getItem('token');
+    const url ='https://myflix-movies-api.herokuapp.com/users/' + localStorage.getItem('user') + '/movies/' + movie._id;
+    axios.post(url,{
+      headers:{Authorization:`Bearer ${token}`},
+
+    })
+    .then((response )=>{
+      console.log(response);
+      alert(movie.Title + 'has added to favorites');
+    })
+  }
+
   
   render(){
     const {movieData,onBackClick} = this.props;
@@ -32,13 +44,22 @@ export class MovieView extends React.Component{
       <span className = 'value'>{movieData.Description}</span>
       </div>
        {/* add “Director” and “Genre” buttons in the movie view and route to the director and genre views   */}
-     <Link to ={`/director/${movie.Director.Name}`}>
-     <button variant='link'>Director</button>
+       <div className="movie-director">
+         <span className='label'>Direction:</span>
+         <span className='link'>
+     <Link to ={`/director/${movieData.Director.Name}`}>
+     <Button variant='link'>Director</Button>
      </Link>
-    <Link to ={`/genre/${movie.Genre.Name}`}>
-      <button variant='link'>Genre</button>
-
+     </span>
+     </div>
+     <div className="movie-genre">
+       <span className='label'>Genre:</span>
+       <span className='link'>
+    <Link to ={`/genre/${movieData.Genre.Name}`}>
+      <Button variant='link'>Genre</Button>
     </Link>
+    </span>
+    </div>
     {/* history.goBack() has been called, which means whenever you click on the back button  in “movie-view.jsx,” it will eventually call goBack() function in main-view */}
       <button variant ='link' onClick = {() => {onBackClick(null);}}>Back</button>
       </div>
@@ -46,3 +67,21 @@ export class MovieView extends React.Component{
   );
 }
 }
+MovieView.propTypes = {
+  movieData: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    Title: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string,
+    Genre: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired
+    }),
+    Director: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Bio: PropTypes.string.isRequired,
+      Birth: PropTypes.string
+    }),
+  }),
+  onBackClick: PropTypes.func.isRequired
+};
