@@ -2,6 +2,7 @@ import React from 'react';
 import Jumbotron  from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 import './director-view.scss';
 
 export class DirectorView extends React.Component {
@@ -24,7 +25,9 @@ export class DirectorView extends React.Component {
             <span className="label">DOB: </span>
             <span className="value">{director.Birth}</span>
           </div>
-          
+          <div className="director-movies">
+                     <Link to={`/movies/${m._id}`}>{m.title}</Link>
+            </div> 
           <Button variant="link" onClick={() => { onBackClick(null); }}>Back</Button>
         </div>
       </Jumbotron>
@@ -36,7 +39,7 @@ DirectorView.propTypes = {
   director: PropTypes.shape({
     Name: PropTypes.string.isRequired,
     Bio: PropTypes.string.isRequired,
-    Birth: PropTypes.string.isRequired,
+    Birth: PropTypes.string.isRequired
    
   }),
   onBackClick: PropTypes.func.isRequired
