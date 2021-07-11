@@ -10,19 +10,21 @@ import {RegistrationView} from '../registration-view/registration-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { BrowserRouter as Router,Route,Redirect} from 'react-router-dom';
+
 import {ProfileView} from '../profile-view/profile-view';
+import MoviesList from '../movies-list/movies-list';
 import  Button  from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './main-view.scss';
 
-export class MainView extends React.Component{
+class MainView extends React.Component{
    constructor(){
     //  call the constructor of parent class
     super();
     // initial state set to null
      this.state={
-       movies:[],
+      //  movies:[],
       // showLoginForm:true,
       //  when user has not logged in or is logged out 
         user:null,
@@ -52,6 +54,22 @@ this.getMovies(accessToken);
   
   // The parameter has been renamed from user to authData,to use both the user and the token.
   // When a user enters the correct credentials, the backend sends back the token and username, which are used for two purposes. First, to update the user state so that the main view is rendered again and, secondly, to save authentication data in localStorage so that the next time you open your app, the browser remembers you’re already logged in.
+  
+// The moment a user logs in, a GET request is made to the “movies” endpoint by passing the bearer authorization in the header of the HTTP request
+  getMovies(token){
+    axios.get('https://myflix-movies-api.herokuapp.com/movies',{
+      headers:{Authorization:`Bearer ${token}`}
+    })
+    .then(response =>{
+      // assign result to state
+      this.setState({
+        movies:response.data}
+        );
+    })
+    .catch(function (error){
+      console.log(error);
+    })
+  }
   onLoggedIn(authData){
    console.log(authData);
    this.setState({
@@ -76,8 +94,11 @@ this.getMovies(accessToken);
   updateUser(data){
     this.setState({
       user:data.username,
-      user_profile:data
+      // user_profile:data
     })
+    localStorage.setItem('username',data.username);
+    localStorage.setItem('user',JSON.stringify(data));
+
   }
   // delete account
   deleteUser(){
@@ -87,21 +108,6 @@ this.getMovies(accessToken);
     this.setState({
       user:null,
       token:null
-    })
-  }
-// The moment a user logs in, a GET request is made to the “movies” endpoint by passing the bearer authorization in the header of the HTTP request
-  getMovies(token){
-    axios.get('https://myflix-movies-api.herokuapp.com/movies',{
-      headers:{Authorization:`Bearer ${token}`}
-    })
-    .then(response =>{
-      // assign result to state
-      this.setState({
-        movies:response.data
-      });
-    })
-    .catch(function (error){
-      console.log(error);
     })
   }
   render(){
