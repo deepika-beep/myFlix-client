@@ -7,7 +7,7 @@ server-side code (REST API and database).
 
 Description:
 
-myFlix is a movie app that allows users to register, log in, delete or filter through a list of movies. Users can add movies to their 'Favorites' lists.This application has built frontend using MERN stack application.The backend is hosted using 'Heroku' and the app is hosted on Netlify at '...'.
+myFlix is a movie app that allows users to register, log in, delete or filter through a list of movies. Users can add movies to their 'Favorites' lists.This application has built frontend using MERN stack application.The backend is hosted using 'Heroku' and the app is hosted on Netlify at '...'
 
 User Stories
 ● As a user, I want to be able to access information on movies, directors, and genres so
@@ -28,3 +28,14 @@ that I can learn more about movies I’ve watched or am interested in.
 ● Allows existing users to deregister
 ● Displays favorite movies
 ● Allows users to remove a movie from their list of favorites
+
+ Dependencies:
+    "axios": "^0.21.1",
+    "parcel": "^2.0.0-beta.3.1",
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.6.1",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9"
