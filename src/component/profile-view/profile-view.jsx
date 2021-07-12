@@ -6,14 +6,20 @@ import{Button} from 'react-bootstrap/Button';
 import{Form} from 'react-bootstrap/Form';
 import {Link} from 'react-router-dom';
 import {FormControl} from 'react-bootstrap';
+import {connect} from 'react-redux';
 
 
-export function ProfileView({userProfile,userToken,onDelete,onUpdate,movies,onMovieDelete}){
+// Get the movie array and the user from store
+const mapStateToProps = state => {
+    const {movies, user} = state;
+    return {movies, user}
+}
+ function ProfileView({user,userProfile,userToken,onDelete,onUpdate,movies,onMovieDelete}){
   const[newUsername,updateUsername] = useState('');
   const[newPassword,updatePassword] = useState('');
   const[newEmail,updateEmail] = useState('');
   const[newBirth,updateBirth] = useState('');
-}
+
 
 // Validating States
 const[validateUser,setValidateUser] = useState('');
@@ -26,7 +32,7 @@ const {username,email,birthday,favoritemovies} =userProfile;
 
   // Validating username
   const validateUsername =(e)=>{
-    if(e.target.value.length > 0 && e.target.value.length <5){
+    if(e.target.value.length > 0 && e.target.value.length < 5){
       setValidateUser('Username must be longer than 5 characters');
     }
     else{
@@ -38,7 +44,7 @@ const {username,email,birthday,favoritemovies} =userProfile;
   }
   // Validating pASSWORD
   const validatePwd =(e)=>{
-    if(e.target.value.length >0 && e.target.value.length<8){
+    if(e.target.value.length > 0 && e.target.value.length <8){
       setValidatePassword('Password must be longer than 8 characters');
     }else
     {
@@ -73,7 +79,7 @@ const {username,email,birthday,favoritemovies} =userProfile;
 
     const updateUser =(e)=> {
       e.preventDefault();
-    }
+    
 
     // validate empty inputs
     if(newUsername.length === 0 || newPassword.length === 0 || newEmail.length === 0 || newBirth.length === 0){
@@ -103,6 +109,7 @@ const {username,email,birthday,favoritemovies} =userProfile;
       console.log(err + 'update failed');
 
     })
+  }
 
     // delete account
     const deleteUser = () =>{
@@ -117,7 +124,7 @@ const {username,email,birthday,favoritemovies} =userProfile;
     }
 
 //  delete a film from fav
-const deleteMovie =(movieID)=>
+const deleteMovie =(movieID)=>{
 axios.delete(`https://myflix-movies-api.herokuapp.com/users/${username}/Favorites/${movieID}`,
 {
   headers:{Authorization:`Bearer ${userToken}`}
@@ -127,7 +134,7 @@ axios.delete(`https://myflix-movies-api.herokuapp.com/users/${username}/Favorite
   }).catch(err =>{
     console.log(err);
   })
-
+}
 // filter the movies based on fav movies(array of movie_id)
 const filterMovies = movies.filter(m =>{
   return favoritemovies.indexof(m._id) >= 0;
@@ -184,6 +191,7 @@ return(
    </Form>
    </div>
  ) 
+      }
       ProfileView.propTypes ={
         movies:PropTypes.array.isRequired,
         userProfile:PropTypes.shape({
@@ -197,4 +205,4 @@ return(
         onUpdate:PropTypes.func.isRequired,
         onMovieDelete:PropTypes.func.isRequired
       }
-      
+      export default connect(mapStateToProps)(ProfileView)

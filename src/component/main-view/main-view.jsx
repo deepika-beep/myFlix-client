@@ -1,33 +1,35 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 // BrowserRouter component is used to implement state-based routing
 import {BrowserRouter as Router,Route}from 'react-router-dom';
 // Loginview pass the user details from the Mainview
 import {LoginView} from '../login-view/login-view';
 import {MovieCard} from '../movie-card/movie-card';
-import  {MovieView} from '../movie-view/movie-view';
+import  MovieView from '../movie-view/movie-view';
 import {RegistrationView} from '../registration-view/registration-view';
-import { DirectorView } from '../director-view/director-view';
-import { GenreView } from '../genre-view/genre-view';
+import  DirectorView  from '../director-view/director-view';
+import  GenreView  from '../genre-view/genre-view';
 import { BrowserRouter as Router,Route,Redirect} from 'react-router-dom';
-import {ProfileView} from '../profile-view/profile-view';
+import ProfileView from '../profile-view/profile-view';
+import { setMovies ,setUser} from '../../action/action';
+import MoviesList from '../movie-list/movie-list';
 import  Button  from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import {NavigationBar} from '../navigation-bar/navigation-bar';
 import './main-view.scss';
 
-export class MainView extends React.Component{
+ class MainView extends React.Component{
    constructor(){
     //  call the constructor of parent class
     super();
     // initial state set to null
      this.state={
-       movies:[],
-      // showLoginForm:true,
       //  when user has not logged in or is logged out 
         user:null,
         token:null,
-        user_profile:null
+       
      }
     }
     //  get the value of the token from localStorage
@@ -40,6 +42,7 @@ this.setState({
   token:localStorage.getItem('token')
 });
 this.getMovies(accessToken);
+ this.props.setUser(JSON.parse(localStorage.getItem('user')))
     }
     }
   //  toggleForms=()=>{
@@ -76,8 +79,12 @@ this.getMovies(accessToken);
   updateUser(data){
     this.setState({
       user:data.username,
-      user_profile:data
+     
     })
+    localStorage.setItem('username', data.username);
+        localStorage.setItem('user', JSON.stringify(data));
+        // update the state of user in the store after updating details
+        this.props.setUser(data)
   }
   // delete account
   deleteUser(){
@@ -96,25 +103,18 @@ this.getMovies(accessToken);
     })
     .then(response =>{
       // assign result to state
-      this.setState({
-        movies:response.data
-      });
+      this.props.setMovies(response.data);
     })
     .catch(function (error){
       console.log(error);
     })
   }
   render(){
-    const {movies,token,user,user_profile} = this.state;
-  
-    // if(!user && showLoginForm === false) return <Row>
-    //   <Col><RegistrationView toggleForms={()=>this.toggleForms()}/>
-    //   </Col>
-    //   </Row>
-   
+    // movies is extracted from this.props rather than from the this.state
+  const{movies}=this.props;
+  const{user}=this.state;
 
     // calls the method when the button is clicked
-
     // display list of movie cards
 // wrap each MovieCard within a Col Bootstrap component
 // If there is no user ,LoginView is rendered.If there is a user loggedin,the user derails are passed as a prop to the LoginView 
@@ -128,11 +128,9 @@ this.getMovies(accessToken);
       <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
       </Col>
        if (movies.length===0) return <div className ='main-view'/>;
-        return movies.map(m=>(
-          <Col md={3} key={m._id}>
-            <MovieCard movie={m}/>
-          </Col>
-        ))
+          <NavigationBar logOut={() => this.onLoggedOut()} username={username}  /> 
+         return <MoviesList movies={movies}/>;
+        
       }}/>
       {/* RegistrationView */}
       <Route path ='/register' render={()=>{
@@ -149,6 +147,7 @@ this.getMovies(accessToken);
       </Col>
       if (movies.length===0) return <div className ='main-view'/>;
          return <Col md={8}>
+           <NavigationBar logOut={() => this.onLoggedOut()} username={username}  />
            <MovieView movie={movies.find(m=>m._id === match.params.movieId)}onBackClick ={() =>history.goBack()} token={token} user={user_profile} />
            </Col>
        }}/>
@@ -160,6 +159,7 @@ this.getMovies(accessToken);
       </Col>
       if (movies.length===0) return <div className ='main-view'/>;
          return <Col md={8}>
+           <NavigationBar logOut={() => this.onLoggedOut()} username={username}  />
            <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() =>history.goBack()} movies={movies}/>
          </Col>
        }}/>
@@ -171,6 +171,7 @@ this.getMovies(accessToken);
       </Col>
       if (movies.length===0) return <div className ='main-view'/>;
          return <Col md={8}>
+           <NavigationBar logOut={() => this.onLoggedOut()} username={username}  />
            <DirectorView director={movies.find(m => m.director.Name === match.params.name).Director} onBackClick={() =>history.goBack()} movies={movies}/>
          </Col>
        }}/>
@@ -183,6 +184,7 @@ this.getMovies(accessToken);
          }
           if (movies.length===0) return <div className ='main-view'/>;
           return <Col>
+          <NavigationBar logOut={() => this.onLoggedOut()} username={username}  />
           <ProfileView onBackClick={() =>history.goBack()}  userProfile={user_profile} userToken={token} onDelete={this.deleteUser()} onUpdate={(data)=>this.updateUser(data)} movies={movies}/>
           </Col>
        }}/>
@@ -190,6 +192,10 @@ this.getMovies(accessToken);
      </Router>
     );
   }}
+
+  let mapStateToProps = state => {
+    return{movies:state.movies}
+  }
 // export keyword exposes the MainView component
- export default MainView;
+ export default connect(mapStateToProps,{setMovies,setUser}) (MainView);
        
