@@ -6,9 +6,15 @@ import{Button} from 'react-bootstrap/Button';
 import{Form} from 'react-bootstrap/Form';
 import {Link} from 'react-router-dom';
 import {FormControl} from 'react-bootstrap';
+import {connect} from 'react-redux';
 
 
-export function ProfileView({userProfile,userToken,onDelete,onUpdate,movies,onMovieDelete}){
+// Get the movie array and the user from store
+const mapStateToProps = state => {
+    const {movies, user} = state;
+    return {movies, user}
+}
+ function ProfileView({user,userProfile,userToken,onDelete,onUpdate,movies,onMovieDelete}){
   const[newUsername,updateUsername] = useState('');
   const[newPassword,updatePassword] = useState('');
   const[newEmail,updateEmail] = useState('');
@@ -199,4 +205,4 @@ return(
         onUpdate:PropTypes.func.isRequired,
         onMovieDelete:PropTypes.func.isRequired
       }
-      
+      export default connect(mapStateToProps)(ProfileView)
