@@ -6,17 +6,18 @@ import {BrowserRouter as Router,Route}from 'react-router-dom';
 // Loginview pass the user details from the Mainview
 import {LoginView} from '../login-view/login-view';
 import {MovieCard} from '../movie-card/movie-card';
-import  {MovieView} from '../movie-view/movie-view';
+import  MovieView from '../movie-view/movie-view';
 import {RegistrationView} from '../registration-view/registration-view';
-import { DirectorView } from '../director-view/director-view';
-import { GenreView } from '../genre-view/genre-view';
+import  DirectorView  from '../director-view/director-view';
+import  GenreView  from '../genre-view/genre-view';
 import { BrowserRouter as Router,Route,Redirect} from 'react-router-dom';
-import {ProfileView} from '../profile-view/profile-view';
-import { setMovies } from '../../action/action';
+import ProfileView from '../profile-view/profile-view';
+import { setMovies ,setUser} from '../../action/action';
 import MoviesList from '../movie-list/movie-list';
 import  Button  from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import {NavigationBar} from '../navigation-bar/navigation-bar';
 import './main-view.scss';
 
  class MainView extends React.Component{
@@ -127,6 +128,7 @@ this.getMovies(accessToken);
       <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
       </Col>
        if (movies.length===0) return <div className ='main-view'/>;
+          <NavigationBar logOut={() => this.onLoggedOut()} username={username}  /> 
          return <MoviesList movies={movies}/>;
         
       }}/>
@@ -145,6 +147,7 @@ this.getMovies(accessToken);
       </Col>
       if (movies.length===0) return <div className ='main-view'/>;
          return <Col md={8}>
+           <NavigationBar logOut={() => this.onLoggedOut()} username={username}  />
            <MovieView movie={movies.find(m=>m._id === match.params.movieId)}onBackClick ={() =>history.goBack()} token={token} user={user_profile} />
            </Col>
        }}/>
@@ -156,6 +159,7 @@ this.getMovies(accessToken);
       </Col>
       if (movies.length===0) return <div className ='main-view'/>;
          return <Col md={8}>
+           <NavigationBar logOut={() => this.onLoggedOut()} username={username}  />
            <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() =>history.goBack()} movies={movies}/>
          </Col>
        }}/>
@@ -167,6 +171,7 @@ this.getMovies(accessToken);
       </Col>
       if (movies.length===0) return <div className ='main-view'/>;
          return <Col md={8}>
+           <NavigationBar logOut={() => this.onLoggedOut()} username={username}  />
            <DirectorView director={movies.find(m => m.director.Name === match.params.name).Director} onBackClick={() =>history.goBack()} movies={movies}/>
          </Col>
        }}/>
@@ -179,6 +184,7 @@ this.getMovies(accessToken);
          }
           if (movies.length===0) return <div className ='main-view'/>;
           return <Col>
+          <NavigationBar logOut={() => this.onLoggedOut()} username={username}  />
           <ProfileView onBackClick={() =>history.goBack()}  userProfile={user_profile} userToken={token} onDelete={this.deleteUser()} onUpdate={(data)=>this.updateUser(data)} movies={movies}/>
           </Col>
        }}/>
@@ -191,5 +197,5 @@ this.getMovies(accessToken);
     return{movies:state.movies}
   }
 // export keyword exposes the MainView component
- export default connect(mapStateToProps,{setMovies}) (MainView);
+ export default connect(mapStateToProps,{setMovies,setUser}) (MainView);
        
