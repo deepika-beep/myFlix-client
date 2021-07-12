@@ -14,11 +14,11 @@ export function setFilter(value){
     type:SET_FILTER,
     value
   };
-
+}
   export function setUser(value){
     return{
       type:SET_USER,
       value
     }
   }
-}
+
