@@ -94,11 +94,11 @@ const handleSubmit = (e) =>{
    <Form>
      <Form.Group controlId='formUsername'>
      <Form.Label>Username:</Form.Label>
-       <Form.Control type = 'text' value = {username} onChange = {e => setUsername(e.target.value),validateUsername(e)}/>
+       <Form.Control type = 'text' value = {username} onChange = {e => setUsername(e.target.value)}/>
          </Form.Group>
       <Form.Group controlId='formPassword'>
        <Form.Label>Password:</Form.Label>
-       <Form.Control type = "text" value = {password} onChange = {e => setPassword(e.target.value),validatePassword(e)} />
+       <Form.Control type = "text" value = {password} onChange = {e => setPassword(e.target.value)} />
        </Form.Group>
       
        <Button variant='primary' type='submit' onClick={handleSubmit}>Submit</Button>
@@ -111,6 +111,6 @@ const handleSubmit = (e) =>{
       
  )
 }
-LoginView.PropTypes = {
+LoginView.propTypes = {
   onLoggedIn:PropTypes.func.isRequired
 }

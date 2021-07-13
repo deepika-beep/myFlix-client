@@ -16,12 +16,12 @@ function MoviesList(props) {
   if (visibilityFilter !== '') {
     filteredMovies = movies.filter(m => m.Title.toLowerCase().includes(visibilityFilter.toLowerCase()));
   }
-
+console.log(filteredMovies);
   if (!movies) return <div className="main-view"/>;
 
  return filteredMovies.map(m => (
     <Col md={3} key={m._id}>
-      <MovieCard movie={m} />
+      <MovieCard movieData={m} />
     </Col>
   ));
 }

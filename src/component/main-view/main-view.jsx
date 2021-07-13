@@ -6,7 +6,7 @@ import {BrowserRouter as Router,Route}from 'react-router-dom';
 // Loginview pass the user details from the Mainview
 import {LoginView} from '../login-view/login-view';
 import {MovieCard} from '../movie-card/movie-card';
-import  MovieView from '../movie-view/movie-view';
+import  {MovieView} from '../movie-view/movie-view';
 import {RegistrationView} from '../registration-view/registration-view';
 import  DirectorView  from '../director-view/director-view';
 import  GenreView  from '../genre-view/genre-view';
@@ -42,7 +42,7 @@ this.setState({
   token:localStorage.getItem('token')
 });
 this.getMovies(accessToken);
- this.props.setUser(JSON.parse(localStorage.getItem('user')))
+//  this.props.setUser(JSON.parse(localStorage.getItem('user')))
     }
     }
   //  toggleForms=()=>{
@@ -123,12 +123,12 @@ this.getMovies(accessToken);
        <Row className='main-view justify-content-md-center'>
          {/* homepage */}
       <Route exact path='/' render={()=>{
-        if(!user) return 
-      <Col>
+       console.log('user');
+       if(!user) return <Col>
       <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
       </Col>
        if (movies.length===0) return <div className ='main-view'/>;
-          <NavigationBar logOut={() => this.onLoggedOut()} username={username}  /> 
+          <NavigationBar logOut={() => this.onLoggedOut()} username={user}  /> 
          return <MoviesList movies={movies}/>;
         
       }}/>
@@ -147,8 +147,8 @@ this.getMovies(accessToken);
       </Col>
       if (movies.length===0) return <div className ='main-view'/>;
          return <Col md={8}>
-           <NavigationBar logOut={() => this.onLoggedOut()} username={username}  />
-           <MovieView movie={movies.find(m=>m._id === match.params.movieId)}onBackClick ={() =>history.goBack()} token={token} user={user_profile} />
+           <NavigationBar logOut={() => this.onLoggedOut()} username={user}  />
+           <MovieView movieData={movies.find(m=>m._id === match.params.movieId)}onBackClick ={() =>history.goBack()} />
            </Col>
        }}/>
 {/* GenreView */}
