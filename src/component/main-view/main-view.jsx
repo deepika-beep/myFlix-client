@@ -8,7 +8,7 @@ import {LoginView} from '../login-view/login-view';
 import {MovieCard} from '../movie-card/movie-card';
 import  {MovieView} from '../movie-view/movie-view';
 import {RegistrationView} from '../registration-view/registration-view';
-import  DirectorView  from '../director-view/director-view';
+import  {DirectorView}  from '../director-view/director-view';
 import  GenreView  from '../genre-view/genre-view';
 import { BrowserRouter as Router,Route,Redirect} from 'react-router-dom';
 import ProfileView from '../profile-view/profile-view';
@@ -159,8 +159,8 @@ this.getMovies(accessToken);
       </Col>
       if (movies.length===0) return <div className ='main-view'/>;
          return <Col md={8}>
-           <NavigationBar logOut={() => this.onLoggedOut()} username={username}  />
-           <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() =>history.goBack()} movies={movies}/>
+           <NavigationBar logOut={() => this.onLoggedOut()} username={user}  />
+           <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() =>history.goBack()} />
          </Col>
        }}/>
 {/* DirectorView */}
@@ -171,8 +171,8 @@ this.getMovies(accessToken);
       </Col>
       if (movies.length===0) return <div className ='main-view'/>;
          return <Col md={8}>
-           <NavigationBar logOut={() => this.onLoggedOut()} username={username}  />
-           <DirectorView director={movies.find(m => m.director.Name === match.params.name).Director} onBackClick={() =>history.goBack()} movies={movies}/>
+           <NavigationBar logOut={() => this.onLoggedOut()} username={user}  />
+           <DirectorView director={movies.find(m => m.Director.Name === match.params.name).director} onBackClick={() =>history.goBack()} />
          </Col>
        }}/>
        {/* ProfileView */}
@@ -184,8 +184,8 @@ this.getMovies(accessToken);
          }
           if (movies.length===0) return <div className ='main-view'/>;
           return <Col>
-          <NavigationBar logOut={() => this.onLoggedOut()} username={username}  />
-          <ProfileView onBackClick={() =>history.goBack()}  userProfile={user_profile} userToken={token} onDelete={this.deleteUser()} onUpdate={(data)=>this.updateUser(data)} movies={movies}/>
+          <NavigationBar logOut={() => this.onLoggedOut()} username={user}  />
+          <ProfileView onBackClick={() =>history.goBack()}  userProfile={user_profile} userToken={token} onDelete={this.deleteUser()} onUpdate={(data)=>this.updateUser(data)} />
           </Col>
        }}/>
      </Row>
