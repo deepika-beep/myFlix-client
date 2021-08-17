@@ -14,9 +14,9 @@ export function LoginView(props){
   
   const[username,setUsername] = useState('');
   const[password,setPassword] = useState('');
-  const[validateUser,setValidateUser]=useState('');
-  const[validatePassword,setValidatePassword]=useState('');
-  const[warning,setWarning]=useState('');
+  // const[validateUser,setValidateUser]=useState('');
+  // const[validatePassword,setValidatePassword]=useState('');
+  // const[warning,setWarning]=useState('');
 
   // Validate Username
   const validateUsername =(e)=> {
@@ -43,7 +43,9 @@ export function LoginView(props){
   }
 // handleSubmit will log username and password into console
 const handleSubmit = (e) =>{
-  e.preventDefault();
+   console.log(username, password);
+  props.onLogin(username);
+  
 
   // avoid submission of empty input
   if(username.length===0){

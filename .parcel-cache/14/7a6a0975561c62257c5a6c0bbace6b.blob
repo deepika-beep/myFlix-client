@@ -1,0 +1,4 @@
+.director-view {
+  background-color: #cabdbd;
+  padding: 10px;
+}

@@ -1,0 +1,122 @@
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "GenreView", ()=>GenreView
+);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _jumbotron = require("react-bootstrap/Jumbotron");
+var _jumbotronDefault = parcelHelpers.interopDefault(_jumbotron);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _reactRouterDom = require("react-router-dom");
+var _genreViewScss = require("./genre-view.scss");
+class GenreView extends _reactDefault.default.Component {
+    render() {
+        const { genre , onBackClick  } = this.props;
+        const genreMovies = movies.filter((m)=>m.genre.name === genre.name
+        );
+        return(/*#__PURE__*/ _reactDefault.default.createElement(_jumbotronDefault.default, {
+            fluid: true,
+            className: "GenreView",
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\genre-view\\genre-view.jsx",
+                lineNumber: 15
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "genre-view",
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\genre-view\\genre-view.jsx",
+                lineNumber: 16
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "genre-name",
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\genre-view\\genre-view.jsx",
+                lineNumber: 17
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "label",
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\genre-view\\genre-view.jsx",
+                lineNumber: 18
+            },
+            __self: this
+        }, "Genre: "), /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "value",
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\genre-view\\genre-view.jsx",
+                lineNumber: 19
+            },
+            __self: this
+        }, genre.Name)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "genre-description",
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\genre-view\\genre-view.jsx",
+                lineNumber: 21
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "label",
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\genre-view\\genre-view.jsx",
+                lineNumber: 22
+            },
+            __self: this
+        }, "Description: "), /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            className: "value",
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\genre-view\\genre-view.jsx",
+                lineNumber: 23
+            },
+            __self: this
+        }, genre.Description)), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+            className: "genre-movies",
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\genre-view\\genre-view.jsx",
+                lineNumber: 25
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
+            to: `/movies/${m._id}`,
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\genre-view\\genre-view.jsx",
+                lineNumber: 27
+            },
+            __self: this
+        }, m.title)), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
+            variant: "link",
+            onClick: ()=>{
+                onBackClick(null);
+            },
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\genre-view\\genre-view.jsx",
+                lineNumber: 29
+            },
+            __self: this
+        }, "Back"))));
+    }
+}
+GenreView.propTypes = {
+    genre: _propTypesDefault.default.shape({
+        Name: _propTypesDefault.default.string.isRequired,
+        Description: _propTypesDefault.default.string.isRequired
+    }),
+    onBackClick: _propTypesDefault.default.func.isRequired
+};
+
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

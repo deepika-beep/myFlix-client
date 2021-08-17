@@ -1,0 +1,43 @@
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+// logic for the reducers
+var _redux = require("redux");
+var _action = require("../action/action");
+// reducer functions
+// initialize state to empty string
+function visibilityFilter(state = '', action) {
+    switch(action.type){
+        case _action.SET_FILTER:
+            return action.value;
+        default:
+            return state;
+    }
+}
+function movies(state = [], action) {
+    switch(action.type){
+        case _action.SET_MOVIES:
+            return action.value;
+        default:
+            return state;
+    }
+}
+function user(state = null, action) {
+    switch(action.type){
+        case _action.SET_USER:
+            return action.value;
+        default:
+            return state;
+    }
+}
+// function moviesApp(state={},action){
+//   return{
+//   visibilityFilter:visibilityFilter(state.visibilityFilter,action),
+//   movies:movies(state.movies,action)
+// }
+// combined reducers
+const moviesApp = _redux.combineReducers({
+    visibilityFilter,
+    movies,
+    user
+});
+exports.default = moviesApp;

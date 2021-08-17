@@ -1,0 +1,197 @@
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "LoginView", ()=>LoginView
+);
+//  useState Hook provides a way to simplify and rewrite the class component as a more readable function component
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _form = require("react-bootstrap/Form");
+var _formDefault = parcelHelpers.interopDefault(_form);
+var _reactRouterDom = require("react-router-dom");
+var _navbar = require("react-bootstrap/Navbar");
+var _navbarDefault = parcelHelpers.interopDefault(_navbar);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+// When a user clicks on the submit button, you need to update your handleSubmit method, where you’ll make a POST request to the login endpoint using Axio
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _loginViewScss = require("./login-view.scss");
+var _s = $RefreshSig$();
+function LoginView(props) {
+    _s();
+    // useState() method is initial value of login variable,returns an array assigning current value to username,setUsername  variable a method to  update username variable.
+    const [username, setUsername] = _react.useState('');
+    const [password, setPassword] = _react.useState('');
+    const [validateUser, setValidateUser] = _react.useState('');
+    const [validatePassword, setValidatePassword] = _react.useState('');
+    const [warning, setWarning] = _react.useState('');
+    // Validate Username
+    const validateUsername = (e)=>{
+        if (e.target.value.length > 0 && e.target.value.length < 6) setValidateUser('Username should be more than 6 charecters');
+        else setValidateUser('');
+        if (!e.currentTarget.value.match(/^[A-Za-z0-9]+$/) && e.target.value.length > 0) setValidateUser('Only alphanumeric charecters allowed');
+    };
+    // Validate Password
+    const validatePwd = (e)=>{
+        if (e.target.value.length > 0 && e.target.value.length < 8) setValidatePassword('Password should be longer than 8 charecters');
+        else setValidatePassword('');
+    };
+    // handleSubmit will log username and password into console
+    const handleSubmit = (e)=>{
+        e.preventDefault();
+        // avoid submission of empty input
+        if (username.length === 0) {
+            setWarning('you should enter a name');
+            return false;
+        }
+        if (password.length === 0) {
+            setWarning('You should enter a password');
+            return false;
+        }
+        // avoid incorrect credentials
+        if (validateUser || validatePassword) {
+            if (validateUser) {
+                setWarning('Incorrect username');
+                return false;
+            }
+            if (validatePassword) {
+                setWarning('Incorrect password');
+                return false;
+            }
+        }
+        // send request to server for authentication
+        // props.onLoggedIn(username) has been changed to props.onLoggedIn(data) because we need the token as well as the username.
+        // when a user clicks on the submit button of the login form, a POST request is made to the login endpoint of your myFlix API using Axios.
+        _axiosDefault.default.post('https://myflix-movies-api.herokuapp.com/login', {
+            Username: username,
+            Password: password
+        }).then((response)=>{
+            const data = response.data;
+            props.onLoggedIn(data);
+        }).catch((e1)=>{
+            console.log('no such user');
+        });
+    // console.log(username,password);
+    //  allow users to be automatically logged in
+    //  props.onLoggedIn(username); 
+    };
+    return(/*#__PURE__*/ _reactDefault.default.createElement(_reactDefault.default.Fragment, null, /*#__PURE__*/ _reactDefault.default.createElement(_navbarDefault.default, {
+        bg: "dark",
+        variant: "dark",
+        __source: {
+            fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\login-view\\login-view.jsx",
+            lineNumber: 90
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement(_navbarDefault.default.Brand, {
+        href: "#home",
+        __source: {
+            fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\login-view\\login-view.jsx",
+            lineNumber: 91
+        },
+        __self: this
+    }, "MyFlix")), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default, {
+        __source: {
+            fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\login-view\\login-view.jsx",
+            lineNumber: 94
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Group, {
+        controlId: "formUsername",
+        __source: {
+            fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\login-view\\login-view.jsx",
+            lineNumber: 95
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Label, {
+        __source: {
+            fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\login-view\\login-view.jsx",
+            lineNumber: 96
+        },
+        __self: this
+    }, "Username:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
+        type: "text",
+        value: username,
+        onChange: (e)=>setUsername(e.target.value)
+        ,
+        __source: {
+            fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\login-view\\login-view.jsx",
+            lineNumber: 97
+        },
+        __self: this
+    })), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Group, {
+        controlId: "formPassword",
+        __source: {
+            fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\login-view\\login-view.jsx",
+            lineNumber: 99
+        },
+        __self: this
+    }, /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Label, {
+        __source: {
+            fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\login-view\\login-view.jsx",
+            lineNumber: 100
+        },
+        __self: this
+    }, "Password:"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Control, {
+        type: "text",
+        value: password,
+        onChange: (e)=>setPassword(e.target.value)
+        ,
+        __source: {
+            fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\login-view\\login-view.jsx",
+            lineNumber: 101
+        },
+        __self: this
+    })), /*#__PURE__*/ _reactDefault.default.createElement(_buttonDefault.default, {
+        variant: "primary",
+        type: "submit",
+        onClick: handleSubmit,
+        __source: {
+            fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\login-view\\login-view.jsx",
+            lineNumber: 104
+        },
+        __self: this
+    }, "Submit"), /*#__PURE__*/ _reactDefault.default.createElement(_formDefault.default.Text, {
+        className: "text-muted",
+        __source: {
+            fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\login-view\\login-view.jsx",
+            lineNumber: 105
+        },
+        __self: this
+    }, "No account yet? Create one ", /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Link, {
+        to: `/register`,
+        __source: {
+            fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\login-view\\login-view.jsx",
+            lineNumber: 106
+        },
+        __self: this
+    }, "Register")), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        className: "warning",
+        __source: {
+            fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\login-view\\login-view.jsx",
+            lineNumber: 108
+        },
+        __self: this
+    }, warning))));
+}
+_s(LoginView, "hPvD0XjzU+PRcde5aI/nsncnI7A=");
+_c = LoginView;
+LoginView.propTypes = {
+    onLoggedIn: _propTypesDefault.default.func.isRequired
+};
+var _c;
+$RefreshReg$(_c, "LoginView");
+
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

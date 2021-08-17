@@ -1,0 +1,315 @@
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _reactRedux = require("react-redux");
+// BrowserRouter component is used to implement state-based routing
+var _reactRouterDom = require("react-router-dom");
+// Loginview pass the user details from the Mainview
+var _loginView = require("../login-view/login-view");
+var _movieCard = require("../movie-card/movie-card");
+var _movieView = require("../movie-view/movie-view");
+var _registrationView = require("../registration-view/registration-view");
+var _directorView = require("../director-view/director-view");
+var _genreView = require("../genre-view/genre-view");
+var _genreViewDefault = parcelHelpers.interopDefault(_genreView);
+var _profileView = require("../profile-view/profile-view");
+var _profileViewDefault = parcelHelpers.interopDefault(_profileView);
+var _action = require("../../action/action");
+var _movieList = require("../movie-list/movie-list");
+var _movieListDefault = parcelHelpers.interopDefault(_movieList);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _row = require("react-bootstrap/Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
+var _col = require("react-bootstrap/Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+var _navigationBar = require("../navigation-bar/navigation-bar");
+var _mainViewScss = require("./main-view.scss");
+class MainView extends _reactDefault.default.Component {
+    constructor(){
+        //  call the constructor of parent class
+        super();
+        // initial state set to null
+        this.state = {
+            //  when user has not logged in or is logged out 
+            user: null,
+            token: null
+        };
+    }
+    //  get the value of the token from localStorage
+    componentDidMount() {
+        let accessToken = localStorage.getItem('token');
+        if (accessToken !== null) {
+            this.setState({
+                user: localStorage.getItem('user'),
+                user_profile: JSON.parse(localStorage.getItem('profile')),
+                token: localStorage.getItem('token')
+            });
+            this.getMovies(accessToken);
+        //  this.props.setUser(JSON.parse(localStorage.getItem('user')))
+        }
+    }
+    //  toggleForms=()=>{
+    //    console.log('test');
+    //    this.setState({
+    //      showLoginForm:!this.state.showLoginForm
+    //     // user:null
+    //    })
+    //  }
+    // The parameter has been renamed from user to authData,to use both the user and the token.
+    // When a user enters the correct credentials, the backend sends back the token and username, which are used for two purposes. First, to update the user state so that the main view is rendered again and, secondly, to save authentication data in localStorage so that the next time you open your app, the browser remembers you’re already logged in.
+    onLoggedIn(authData) {
+        console.log(authData);
+        this.setState({
+            user: authData.user.Username,
+            token: authData.token,
+            user_profile: authData.user
+        });
+        localStorage.setItem('token', authData.token);
+        localStorage.setItem('user', authData.user.Username);
+        localStorage.setItem('profile', JSON.stringify(authData.user));
+        this.getMovies(authData.token);
+    }
+    // log out function-which deletes the token and the user from localStorage and clears the user state to null
+    onLoggedOut() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.setState({
+            user: null
+        });
+    }
+    // update user's info
+    updateUser(data) {
+        this.setState({
+            user: data.username
+        });
+        localStorage.setItem('username', data.username);
+        localStorage.setItem('user', JSON.stringify(data));
+        // update the state of user in the store after updating details
+        this.props.setUser(data);
+    }
+    // delete account
+    deleteUser() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('profile');
+        this.setState({
+            user: null,
+            token: null
+        });
+    }
+    // The moment a user logs in, a GET request is made to the “movies” endpoint by passing the bearer authorization in the header of the HTTP request
+    getMovies(token) {
+        _axiosDefault.default.get('https://myflix-movies-api.herokuapp.com/movies', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            // assign result to state
+            this.props.setMovies(response.data);
+        }).catch(function(error) {
+            console.log(error);
+        });
+    }
+    render() {
+        // movies is extracted from this.props rather than from the this.state
+        const { movies  } = this.props;
+        const { user  } = this.state;
+        // calls the method when the button is clicked
+        // display list of movie cards
+        // wrap each MovieCard within a Col Bootstrap component
+        // If there is no user ,LoginView is rendered.If there is a user loggedin,the user derails are passed as a prop to the LoginView 
+        return(/*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.BrowserRouter, {
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\main-view\\main-view.jsx",
+                lineNumber: 122
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_rowDefault.default, {
+            className: "main-view justify-content-md-center",
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\main-view\\main-view.jsx",
+                lineNumber: 123
+            },
+            __self: this
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
+            exact: true,
+            path: "/",
+            render: ()=>{
+                console.log('user');
+                if (!user) return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, null, /*#__PURE__*/ _reactDefault.default.createElement(_loginView.LoginView, {
+                    onLoggedIn: (user1)=>this.onLoggedIn(user1)
+                })));
+                if (movies.length === 0) return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+                    className: "main-view"
+                }));
+                /*#__PURE__*/ _reactDefault.default.createElement(_navigationBar.NavigationBar, {
+                    logOut: ()=>this.onLoggedOut()
+                    ,
+                    username: user
+                });
+                return(/*#__PURE__*/ _reactDefault.default.createElement(_movieListDefault.default, {
+                    movies: movies
+                }));
+            },
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\main-view\\main-view.jsx",
+                lineNumber: 125
+            },
+            __self: this
+        }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
+            path: "/register",
+            render: ()=>{
+                if (user) return(/*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Redirect, {
+                    to: "/"
+                }));
+                return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, null, /*#__PURE__*/ _reactDefault.default.createElement(_registrationView.RegistrationView, null)));
+            },
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\main-view\\main-view.jsx",
+                lineNumber: 136
+            },
+            __self: this
+        }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
+            path: "/movies/:movieId",
+            render: ({ match , history  })=>{
+                if (!user) return;
+                /*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, null, /*#__PURE__*/ _reactDefault.default.createElement(_loginView.LoginView, {
+                    onLoggedIn: (user1)=>this.onLoggedIn(user1)
+                }));
+                if (movies.length === 0) return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+                    className: "main-view"
+                }));
+                return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+                    md: 8
+                }, /*#__PURE__*/ _reactDefault.default.createElement(_navigationBar.NavigationBar, {
+                    logOut: ()=>this.onLoggedOut()
+                    ,
+                    username: user
+                }), /*#__PURE__*/ _reactDefault.default.createElement(_movieView.MovieView, {
+                    movieData: movies.find((m)=>m._id === match.params.movieId
+                    ),
+                    onBackClick: ()=>history.goBack()
+                })));
+            },
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\main-view\\main-view.jsx",
+                lineNumber: 143
+            },
+            __self: this
+        }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
+            exact: true,
+            path: "/genre/:name",
+            render: ({ match , history  })=>{
+                if (!user) return;
+                /*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, null, /*#__PURE__*/ _reactDefault.default.createElement(_loginView.LoginView, {
+                    onLoggedIn: (user1)=>this.onLoggedIn(user1)
+                }));
+                if (movies.length === 0) return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+                    className: "main-view"
+                }));
+                return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+                    md: 8
+                }, /*#__PURE__*/ _reactDefault.default.createElement(_navigationBar.NavigationBar, {
+                    logOut: ()=>this.onLoggedOut()
+                    ,
+                    username: user
+                }), /*#__PURE__*/ _reactDefault.default.createElement(_genreViewDefault.default, {
+                    genre: movies.find((m)=>m.Genre.Name === match.params.name
+                    ).Genre,
+                    onBackClick: ()=>history.goBack()
+                    ,
+                    movies: movies
+                })));
+            },
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\main-view\\main-view.jsx",
+                lineNumber: 155
+            },
+            __self: this
+        }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
+            exact: true,
+            path: "/director/:name",
+            render: ({ match , history  })=>{
+                if (!user) return;
+                /*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, null, /*#__PURE__*/ _reactDefault.default.createElement(_loginView.LoginView, {
+                    onLoggedIn: (user1)=>this.onLoggedIn(user1)
+                }));
+                if (movies.length === 0) return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+                    className: "main-view"
+                }));
+                return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, {
+                    md: 8
+                }, /*#__PURE__*/ _reactDefault.default.createElement(_navigationBar.NavigationBar, {
+                    logOut: ()=>this.onLoggedOut()
+                    ,
+                    username: user
+                }), /*#__PURE__*/ _reactDefault.default.createElement(_directorView.DirectorView, {
+                    director: movies.find((m)=>m.director.name === match.params.name
+                    ).director,
+                    onBackClick: ()=>history.goBack()
+                    ,
+                    movies: movies
+                })));
+            },
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\main-view\\main-view.jsx",
+                lineNumber: 167
+            },
+            __self: this
+        }), /*#__PURE__*/ _reactDefault.default.createElement(_reactRouterDom.Route, {
+            path: "/users/:username",
+            render: ({ match , history  })=>{
+                if (!user) return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, null, /*#__PURE__*/ _reactDefault.default.createElement(_loginView.LoginView, {
+                    onLoggedIn: (user1)=>this.onLoggedIn(user1)
+                })));
+                if (movies.length === 0) return(/*#__PURE__*/ _reactDefault.default.createElement("div", {
+                    className: "main-view"
+                }));
+                return(/*#__PURE__*/ _reactDefault.default.createElement(_colDefault.default, null, /*#__PURE__*/ _reactDefault.default.createElement(_navigationBar.NavigationBar, {
+                    logOut: ()=>this.onLoggedOut()
+                    ,
+                    username: username
+                }), /*#__PURE__*/ _reactDefault.default.createElement(_profileViewDefault.default, {
+                    onBackClick: ()=>history.goBack()
+                    ,
+                    userProfile: user_profile,
+                    userToken: token,
+                    onDelete: this.deleteUser(),
+                    onUpdate: (data)=>this.updateUser(data)
+                    ,
+                    movies: movies
+                })));
+            },
+            __source: {
+                fileName: "C:\\Users\\dheer\\Desktop\\CareerFoundry\\myFlix-client\\src\\component\\main-view\\main-view.jsx",
+                lineNumber: 179
+            },
+            __self: this
+        }))));
+    }
+}
+let mapStateToProps = (state)=>{
+    return {
+        movies: state.movies
+    };
+};
+exports.default = _reactRedux.connect(mapStateToProps, {
+    setMovies: _action.setMovies,
+    setUser: _action.setUser
+})(MainView);
+
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
