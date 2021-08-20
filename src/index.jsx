@@ -8,11 +8,11 @@ import moviesApp from './reducers/reducers';
 // To import main-view into other index-jsx file
 import MainView from './component/main-view/main-view';
 // react-bootstrap components
-import Container from 'react-bootstrap/Container';
+
 // Import statement to indicate that you need to bundle `./index.scss
 import './index.scss';
-const store = createStore(moviesApp, devToolsEnhancer());
-<Provider store={store}></Provider>
+const store = createStore(moviesApp);
+
 class MyFlixApplication extends React.Component{
   render(){
     return (
