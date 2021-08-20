@@ -1,0 +1,24 @@
+$text: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+$box-shadow:  6px 9px 16px -3px #000000;
+$padding: 10px;
+$border-radius: 10px;
+
+form {
+   max-width: 600px;
+   width: 100%;
+   font-family: $text;
+   margin: 0 auto;
+
+   .warning {
+      color: red;
+      border-radius: $border-radius;
+      border: 1px solid red;
+      padding: 0 5px;
+      text-align: center;
+      background-color: #fff;
+      
+      &:empty {
+         display: none;
+      }
+   }
+}

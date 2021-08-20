@@ -1,0 +1,71 @@
+$boxShadow: 5px 5px 15px 5px #747373;
+$formBackgreound: #fff;
+$border-radius: 10px;
+
+.update-info {
+    border: 1px solid rgba(128, 128, 128, 0.288);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+    background-color: $formBackgreound;
+    margin: 0;
+    max-width: 100%;
+
+    .form-label {
+        color: rgb(35, 113, 145);
+    }
+
+    
+    .button-wrapper {
+        display: flex;
+        justify-content: space-evenly;
+    }
+}
+
+
+
+.profile-view {
+    h4 {
+        text-align: center;
+    }
+
+    .feedback {
+        color: rgb(8, 160, 8);
+        border: 1px solid rgb(8, 160, 8);
+        text-align: center;
+        border-radius: $border-radius;
+        padding: 0 5px;
+        background-color: #fff;
+        margin: 20px 0;
+
+        &:empty {
+         display: none;
+      }
+    }
+    
+    .user-profile {
+        background-color: $formBackgreound;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+        margin-bottom: 30px;
+        border-radius: 5px;
+
+        
+        .user-label {
+            font-size: 14px;
+            color: rgb(35, 113, 145);
+        }
+
+        .user {
+            border-bottom: 1px solid rgba(128, 128, 128, 0.288);
+            list-style-type: none;
+
+            .fav-list {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+    }
+}

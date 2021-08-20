@@ -7,10 +7,10 @@ import Form from 'react-bootstrap/Form';
 import axios from "axios";
 import './registration-view.scss';
 export function RegistrationView(props) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [birthday, setBirthday] = useState("");
+  const [Username, setUsername] = useState("");
+  const [Password, setPassword] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Birth_Date, setBirthday] = useState("");
 // Validating states
   const [validateUser,setValidateUser] = useState('');
   const [validatePassword,setValidatePassword] = useState('');
@@ -24,14 +24,14 @@ export function RegistrationView(props) {
       setValidateUser('Username must be longer than 5 characters');
     }
     else{
-      setValidateUser('User');
+      setValidateUser('');
     }
     if(!e.currentTarget.value.match(/^[0-9a-zA-Z]+$/) && e.target.value.length >0){
       setValidateUser('only alphanumeric charecters allowed');
     }
   }
   // Validating pASSWORD
-  const validatePwd =(e)=>{
+  const validatePwd = (e) => {
     if(e.target.value.length >0 && e.target.value.length<8){
       setValidatePassword('Password must be longer than 8 characters');
     }else
@@ -60,7 +60,7 @@ export function RegistrationView(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     // vslidating empty inputs
-    if(username.length === 0 || password.length === 0 || email.length === 0 || birthday.length === 0){
+    if(username.length === 0 || password.length === 0 || email.length === 0 || birth_date.length === 0){
       setWarning('Please fill in all the fields');
       return false
     }
@@ -68,15 +68,15 @@ export function RegistrationView(props) {
     // prevent incorrect  credentials
     if(validateUser || validatePassword || validateEmail || validateDate){
       alert('Entered incorrect values');
-      return false
+      return false;
     }
     axios.post('https://myflix-movies-api.herokuapp.com/users',{
-      Username:username,
-      Password:password,
-      Email:email,
-      Birthday:birthday
-    })
-    .then (response =>{
+      Username:Username,
+      Password:Password,
+      Email:Email,
+      Birth_Date:Birth_Date
+    })  
+    .then(response =>{
       const data =response.data;
       console.log(data);
       // // the second argument '_self' is necessary so that the page will open in the current tab
@@ -84,8 +84,11 @@ export function RegistrationView(props) {
     })
     .catch(e =>{
       console.log('error registering the user');
-      if(e.response.data == `${username} or ${email} already exist`){
-        setWarning('Username or Email already exists');
+      if(e.response.data == `${Username} or ${Email} already exist.`&& e.response.status == 400 ) {
+               setWarning('Username or Email already existent');
+      }
+      else{
+        setWarning(e.response.data);
       }
     })
 
@@ -99,33 +102,28 @@ export function RegistrationView(props) {
     <Form>
       <Form.Group controlId="formUsername">
      <Form.Label>Username:</Form.Label>
-       <Form.Control type="text" placeholder ='enter Username' value={username}
-          onChange={(e) => setUsername(e.target.value),validateUsername(e)}
+       <Form.Control type="text" placeholder ='enter Username' value={Username}
+          onChange={(e) =>{ setUsername(e.target.value),validateUsername(e)}}
         />
       </Form.Group>
 
       <Form.Group controlId="formPassword">
       <Form.Label>Create Password:</Form.Label>
-       <Form.Control  type="password" placeholder ='enter password' value={password}
+       <Form.Control  type="password" placeholder ='enter password' value={Password}
           onChange={(e) => setPassword(e.target.value),validatePassword(e)}
         />
         </Form.Group>
-       <Form.Group controlId="formGroupEmail">
+       <Form.Group controlId="formEmail">
         <Form.Label> Email:</Form.Label>
-         
-          <Form.Control 
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value),validateEmail(e)}
-          />
-          </Form.Group>
+             <Form.Control type="email" value={Email} onChange={ (e) => { setEmail(e.target.value), validateMail(e) }} />
+              <span className="validation-feedback">{validateEmail}</span>
+                </Form.Group> 
       
         <Form.Group controlId="formBirthday">
             <Form.Label>Birthday:</Form.Label>
          <Form.Control 
-            type="date"
-            value={birthday}
-            onChange={(e) => setBirthday(e.target.value),validateBirthday(e)}
+            type="text"
+            onChange={(e) => {setBirthday(e.target.value),validateBirthday(e)}}
           />
           </Form.Group>
       

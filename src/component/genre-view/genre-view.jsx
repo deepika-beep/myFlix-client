@@ -1,41 +1,45 @@
+
 import React from 'react';
 import PropTypes from 'prop-types';
-import  Jumbotron  from 'react-bootstrap/Jumbotron';
-import Button from 'react-bootstrap/Button';
-import { Link } from "react-router-dom";
-import './genre-view.scss';
+import { Button, Row, Col, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export class GenreView extends React.Component {
+import "./genre-view.scss"
+// Getting the movie list from store as prop
+const mapStateToProps = state => {
+  const { movies } = state;
+  return { movies };
+};
+function GenreView(props) {
 
-  render() {
-    const { genre, onBackClick} = this.props;
-    const genreMovies = movies.filter(m => m.genre.name === genre.name)
+  const { genre, clickBack, movies } = props;
 
-    return (
-      <Jumbotron fluid className="GenreView">
-        <div className="genre-view">
-          <div className="genre-name">
-            <span className="label">Genre: </span>
-            <span className="value">{genre.Name}</span>
-          </div>
-          <div className="genre-description">
-            <span className="label">Description: </span>
-            <span className="value">{genre.Description}</span>
-          </div>
-          <div className="genre-movies">
-        
-            <Link to={`/movies/${m._id}`}>{m.title}</Link>
-            </div>
-          <Button variant="link" onClick={() => { onBackClick(null); }}>Back</Button>
-        </div>
-      </Jumbotron>
-    );
-  }
+  const genresMovies = movies.filter(m => m.genre.name === genre.name)
+
+
+  return (
+    <div className="director-view">
+      <h2> {genre.Name} </h2>
+      <p> {genre.Description} </p>
+
+
+      <div className="genre-movies">
+        <small>Movies belonging to this genre:</small>
+        {genresMovies.map((m, i) => <p key={m._id}> <Link to={`/movies/${m._id}`}>{m.title}</Link> </p>)}
+      </div> <hr />
+      <Button variant="link" onClick={() => { clickBack(); }}>Back</Button>
+    </div>
+  )
 }
+
 GenreView.propTypes = {
   genre: PropTypes.shape({
-      Name: PropTypes.string.isRequired,
-      Description: PropTypes.string.isRequired
-  }),
-   onBackClick: PropTypes.func.isRequired
-};
+  Name: PropTypes.string.isRequired,
+  Description: PropTypes.string.isRequired
+  }).isRequired,
+  clickBack: PropTypes.func.isRequired,
+  movies: PropTypes.array.isRequired
+}
+
+export default connect(mapStateToProps)(GenreView)

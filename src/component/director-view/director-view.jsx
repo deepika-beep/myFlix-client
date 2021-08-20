@@ -1,38 +1,36 @@
+
 import React from 'react';
-import Jumbotron  from 'react-bootstrap/Jumbotron';
-import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
+import { Button, Row, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+
 import './director-view.scss';
+// Getting the movie list from store as prop
+const mapStateToProps = state => {
+    const {movies} = state;
+    return {movies};
+};
+function DirectorView({ director, clickBack, movies }) {
 
-export class DirectorView extends React.Component {
-
-  render() {
-    const { director, onBackClick } = this.props;
-
+    const directorsMovies = movies.filter(m => m.director.name === director.name)
     return (
-      <Jumbotron fluid className='director'>
         <div className="director-view">
-          <div className="director-name">
-            <span className="label">Director: </span>
-            <span className="value">{director.Name}</span>
-          </div>
-          <div className="director-bio">
-            <span className="label">Bio: </span>
-            <span className="value">{director.Bio}</span>
-          </div>
-          <div className="director-birth">
-            <span className="label">DOB: </span>
-            <span className="value">{director.Birth}</span>
-          </div>
-          <div className="director-movies">
-                     <Link to={`/movies/${m._id}`}>{m.title}</Link>
-            </div> 
-          <Button variant="link" onClick={() => { onBackClick(null); }}>Back</Button>
+            <h2> {director.Name} </h2>
+            <p> {director.Bio} </p>
+
+            <div>
+                <small>Birth: </small>
+                <p>{director.Birth.slice(0, 10)}</p>
+            </div>
+
+            <div className="director-movies">
+                    <small>Movies belonging to this director:</small>
+                    {directorsMovies.map((m, i) => <p key={m._id}> <Link to={`/movies/${m._id}`}>{m.title}</Link> </p> )}
+            </div> <hr />
+            <Button variant="link"  onClick={() => { clickBack(); }}>Back</Button>
         </div>
-      </Jumbotron>
-    );
-  }
+    )
 }
 
 DirectorView.propTypes = {
@@ -40,7 +38,7 @@ DirectorView.propTypes = {
     Name: PropTypes.string.isRequired,
     Bio: PropTypes.string.isRequired,
     Birth: PropTypes.string.isRequired
-   
-  }),
-  onBackClick: PropTypes.func.isRequired
+  }).isRequired,
+  clickBack: PropTypes.func.isRequired
 };
+export default connect(mapStateToProps)(DirectorView)

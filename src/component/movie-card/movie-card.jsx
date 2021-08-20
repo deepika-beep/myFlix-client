@@ -1,4 +1,5 @@
 import React from 'react';
+import './movie-card.scss';
 // propTypes avoid bugs and validates datatypes
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
@@ -8,15 +9,15 @@ import {Link} from 'react-router-dom';
 export class MovieCard extends React.Component{
   render(){
     // 2 props-one function(onMovieclick) and object (movieData)
-    const {movieData} = this.props;
+    const {movie} = this.props;
    return (
    <Card>
-   <Card.Img variant="top" src={movieData.ImagePath} />
+   <Card.Img variant="top" src={movie.ImagePath} />
   <Card.Body>
-    <Card.Title>{movieData.Title}</Card.Title>
-    <Card.Text>{movieData.Description}</Card.Text>
+    <Card.Title>{movie.Title}</Card.Title>
+    <Card.Text>{movie.Description}</Card.Text>  
     <Link to={`/movies/${movie._id}`}>
-    <Button variant="link">Open</Button>
+    <Button variant="link">View</Button>
     </Link>
   </Card.Body>
    </Card>
@@ -27,13 +28,13 @@ export class MovieCard extends React.Component{
 // the props object must contain onMovieClick and it must be a function.
 // onMovieClick function is passed as a prop to the MovieCard component, it will avoid warning in the console upon running the application 
 MovieCard.propTypes={
-movieData:PropTypes.shape({
+movie:PropTypes.shape({
   Title:PropTypes.string.isRequired,
   Description:PropTypes.string.isRequired,
   ImagePath:PropTypes.string.isRequired,
   Genre:PropTypes.shape({
     Name: PropTypes.string.isRequired,
-      Description: PropTypes.string.isRequired
+      Description: PropTypes.string
   }),
   Director:PropTypes.shape({
     Name: PropTypes.string.isRequired,
@@ -42,6 +43,5 @@ movieData:PropTypes.shape({
       
   }),
 }).isRequired,
-onMovieClick:PropTypes.func.isRequired
 };
 

@@ -1,0 +1,25 @@
+$header: 26px;
+$font-weight-label: 600;
+$boxShadow: 5px 5px 15px 5px #6b6b6b;
+$movieBackground: #fff;
+
+.movie-view {
+    padding: 10px;
+    background-color: $movieBackground;
+    box-shadow: $boxShadow; 
+
+    .movie-image {
+        display: flex;
+        justify-content: center;
+    
+        img {
+            max-width: 60%;
+            max-height: 60%;
+        }
+    }
+}
+
+.label {
+    font-size: $header;
+    font-weight:$font-weight-label;
+}
