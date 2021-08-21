@@ -10,7 +10,7 @@ import MovieList from '../movie-list/movie-list';
 import { MovieCard } from '../movie-card/movie-card';
 import  MovieView  from '../movie-view/movie-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import  DirectorView  from '../director-view/director-view';
+import  { DirectorView }  from '../director-view/director-view';
 import  GenreView  from '../genre-view/genre-view';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import  ProfileView  from '../profile-view/profile-view';
@@ -62,7 +62,7 @@ import './main-view.scss';
   // When a user enters the correct credentials, the backend sends back the token and username, which are used for two purposes. First, to update the user state so that the main view is rendered again and, secondly, to save authentication data in localStorage so that the next time you open your app, the browser remembers you’re already logged in.
   loginUser(authData) {
     this.props.setUser(authData.user)
-    console.log(authData);
+    // console.log(authData);
     this.setState({
       username: authData.user.username,
       token: authData.token,
@@ -157,7 +157,7 @@ import './main-view.scss';
             if (movies.length === 0) return <div className='main-view' />;
             return <Col md={12}>
               <NavigationBar logOut={() => this.onLoggedOut()} username={username} />
-              <GenreView genre={movies.find(m => m.genre.name === match.params.name).genre} clickBack={() => {history.goBack()}} />
+              <GenreView genre={movies.find(m => m.Genre.Name === match.params.Name).genre} clickBack={() => {history.goBack()}} />
             </Col>
           }} />
           {/* DirectorView */}
@@ -170,7 +170,7 @@ import './main-view.scss';
             if (movies.length === 0) return <div className='main-view' />;
             return <Col md={12}>
               <NavigationBar logOut={() => this.onLoggedOut()} username={username} />
-              <DirectorView director={movies.find(m => m.director.name === match.params.name).Director} clickBack={() => {history.goBack()}} />
+              <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} clickBack={() => {history.goBack()}} />
             </Col>
           }} />
           {/* ProfileView */}

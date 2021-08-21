@@ -60,7 +60,7 @@ export function RegistrationView(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     // vslidating empty inputs
-    if(username.length === 0 || password.length === 0 || email.length === 0 || birth_date.length === 0){
+    if(Username.length === 0 || Password.length === 0 || Email.length === 0 || Birth_Date.length === 0){
       setWarning('Please fill in all the fields');
       return false
     }
@@ -105,13 +105,15 @@ export function RegistrationView(props) {
        <Form.Control type="text" placeholder ='enter Username' value={Username}
           onChange={(e) =>{ setUsername(e.target.value),validateUsername(e)}}
         />
+          <span className="validation-feedback">{validateUser}</span> 
       </Form.Group>
 
       <Form.Group controlId="formPassword">
       <Form.Label>Create Password:</Form.Label>
        <Form.Control  type="password" placeholder ='enter password' value={Password}
-          onChange={(e) => setPassword(e.target.value),validatePassword(e)}
+          onChange={(e) => setPassword(e.target.value)}   
         />
+         <span className="validation-feedback">{validatePassword}</span> 
         </Form.Group>
        <Form.Group controlId="formEmail">
         <Form.Label> Email:</Form.Label>
@@ -125,6 +127,7 @@ export function RegistrationView(props) {
             type="text"
             onChange={(e) => {setBirthday(e.target.value),validateBirthday(e)}}
           />
+          <span className="validation-feedback">{validateDate}</span>
           </Form.Group>
       
       <Button variant='primary' type="submit" onClick={handleSubmit}>Submit</Button>
@@ -138,3 +141,13 @@ export function RegistrationView(props) {
     </>
   );
 }
+
+
+
+RegistrationView.propTypes = {
+  register: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Password: PropTypes.string.isRequired,
+     Email:PropTypes.string.isRequired,
+  Birth_Date:PropTypes.string.isRequired
+  })};

@@ -11,17 +11,17 @@ const mapStateToProps = state => {
     const {movies} = state;
     return {movies};
 };
-function DirectorView({ director, clickBack, movies }) {
+function DirectorView({ Director, clickBack, movies }) {
 
-    const directorsMovies = movies.filter(m => m.director.name === director.name)
+    const directorsMovies = movies.filter(m => m.Director.Name === Director.Name)
     return (
         <div className="director-view">
-            <h2> {director.Name} </h2>
-            <p> {director.Bio} </p>
+            <h2> {Director.Name} </h2>
+            <p> {Director.Bio} </p>
 
             <div>
                 <small>Birth: </small>
-                <p>{director.Birth.slice(0, 10)}</p>
+                <p>{Director.Birth.slice(0, 10)}</p>
             </div>
 
             <div className="director-movies">
@@ -34,7 +34,7 @@ function DirectorView({ director, clickBack, movies }) {
 }
 
 DirectorView.propTypes = {
-  director: PropTypes.shape({
+  Director: PropTypes.shape({
     Name: PropTypes.string.isRequired,
     Bio: PropTypes.string.isRequired,
     Birth: PropTypes.string.isRequired

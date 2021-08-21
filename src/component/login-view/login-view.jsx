@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import './login-view.scss';
 import Navbar from 'react-bootstrap/Navbar';
 export function LoginView(props) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [Username, setUsername] = useState('');
+  const [Password, setPassword] = useState('');
      const [ validateUser, setValidateUser ] = useState('');
     const [ validatePassword, setValidatePassword ] = useState('');
     const [ warning, setWarning ] = useState('');
@@ -41,11 +41,11 @@ export function LoginView(props) {
         e.preventDefault();
 
         // prevent submission in case an input is empty is empty
-        if(username.length === 0) {
+        if(Username.length === 0) {
             setWarning('You must introduce a username')
             return false
         }
-        if(password.length === 0) {
+        if(Password.length === 0) {
             setWarning('You must introduce a password')
             return false
         }
@@ -64,8 +64,8 @@ export function LoginView(props) {
         }
 
     axios.post('https://myflix-movies-api.herokuapp.com/login', {
-      username: username,
-      password: password
+      Username: Username,
+      Password: Password
     })
     .then(response => {
       const data = response.data;
@@ -86,13 +86,13 @@ export function LoginView(props) {
             <h3>Login</h3> <hr />
             <Form.Group controlId="formUsername">
                 <Form.Label>Username </Form.Label>
-                <Form.Control type="text" value={username} onChange={ (e) => {setUsername(e.target.value), validateUsername(e)}} />
+                <Form.Control type="text" value={Username} onChange={ (e) => {setUsername(e.target.value), validateUsername(e)}} />
                 <span className="validation-feedback">{validateUser}</span>
             </Form.Group>
 
             <Form.Group controlId="formPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" value={password} onChange={ (e) => {setPassword(e.target.value), validatePwd(e)}} />
+                <Form.Control type="password" value={Password} onChange={ (e) => {setPassword(e.target.value), validatePwd(e)}} />
                 <span className="validation-feedback">{validatePassword}</span>
             </Form.Group>
 

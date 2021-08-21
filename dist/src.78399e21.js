@@ -41872,12 +41872,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function LoginView(props) {
   var _useState = (0, _react.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
-      username = _useState2[0],
+      Username = _useState2[0],
       setUsername = _useState2[1];
 
   var _useState3 = (0, _react.useState)(''),
       _useState4 = _slicedToArray(_useState3, 2),
-      password = _useState4[0],
+      Password = _useState4[0],
       setPassword = _useState4[1];
 
   var _useState5 = (0, _react.useState)(''),
@@ -41920,12 +41920,12 @@ function LoginView(props) {
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault(); // prevent submission in case an input is empty is empty
 
-    if (username.length === 0) {
+    if (Username.length === 0) {
       setWarning('You must introduce a username');
       return false;
     }
 
-    if (password.length === 0) {
+    if (Password.length === 0) {
       setWarning('You must introduce a password');
       return false;
     } //prevent submission of incorrect credentials
@@ -41946,8 +41946,8 @@ function LoginView(props) {
     }
 
     _axios.default.post('https://myflix-movies-api.herokuapp.com/login', {
-      username: username,
-      password: password
+      Username: Username,
+      Password: Password
     }).then(function (response) {
       var data = response.data;
       props.onLoggedIn(data);
@@ -41968,7 +41968,7 @@ function LoginView(props) {
     controlId: "formUsername"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Username "), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
     type: "text",
-    value: username,
+    value: Username,
     onChange: function onChange(e) {
       setUsername(e.target.value), validateUsername(e);
     }
@@ -41978,7 +41978,7 @@ function LoginView(props) {
     controlId: "formPassword"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Password"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
     type: "password",
-    value: password,
+    value: Password,
     onChange: function onChange(e) {
       setPassword(e.target.value), validatePwd(e);
     }
@@ -42519,7 +42519,7 @@ var MovieView = /*#__PURE__*/function (_React$Component) {
   _createClass(MovieView, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var favMovies = this.props.user.favoritemovies;
+      var favMovies = this.props.user.FavoriteMovies;
       var movieId = this.props.movie._id;
 
       if (favMovies.includes(movieId)) {
@@ -42829,7 +42829,7 @@ function RegistrationView(props) {
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault(); // vslidating empty inputs
 
-    if (username.length === 0 || password.length === 0 || email.length === 0 || birth_date.length === 0) {
+    if (Username.length === 0 || Password.length === 0 || Email.length === 0 || Birth_Date.length === 0) {
       setWarning('Please fill in all the fields');
       return false;
     } // prevent incorrect  credentials
@@ -42876,16 +42876,20 @@ function RegistrationView(props) {
     onChange: function onChange(e) {
       setUsername(e.target.value), validateUsername(e);
     }
-  })), /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
+  }), /*#__PURE__*/_react.default.createElement("span", {
+    className: "validation-feedback"
+  }, validateUser)), /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
     controlId: "formPassword"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Create Password:"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
     type: "password",
     placeholder: "enter password",
     value: Password,
-    onChange: (function (e) {
+    onChange: function onChange(e) {
       return setPassword(e.target.value);
-    }, validatePassword(e))
-  })), /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
+    }
+  }), /*#__PURE__*/_react.default.createElement("span", {
+    className: "validation-feedback"
+  }, validatePassword)), /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
     controlId: "formEmail"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, " Email:"), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
     type: "email",
@@ -42902,7 +42906,9 @@ function RegistrationView(props) {
     onChange: function onChange(e) {
       setBirthday(e.target.value), validateBirthday(e);
     }
-  })), /*#__PURE__*/_react.default.createElement(_Button.default, {
+  }), /*#__PURE__*/_react.default.createElement("span", {
+    className: "validation-feedback"
+  }, validateDate)), /*#__PURE__*/_react.default.createElement(_Button.default, {
     variant: "primary",
     type: "submit",
     onClick: handleSubmit
@@ -42914,6 +42920,15 @@ function RegistrationView(props) {
     className: "warning"
   }, warning)));
 }
+
+RegistrationView.propTypes = {
+  register: _propTypes.default.shape({
+    Username: _propTypes.default.string.isRequired,
+    Password: _propTypes.default.string.isRequired,
+    Email: _propTypes.default.string.isRequired,
+    Birth_Date: _propTypes.default.string.isRequired
+  })
+};
 },{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Navbar":"../node_modules/react-bootstrap/esm/Navbar.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","axios":"../node_modules/axios/index.js","./registration-view.scss":"component/registration-view/registration-view.scss"}],"../node_modules/react-bootstrap/esm/AccordionContext.js":[function(require,module,exports) {
 "use strict";
 
@@ -54571,15 +54586,15 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 function DirectorView(_ref) {
-  var director = _ref.director,
+  var Director = _ref.Director,
       clickBack = _ref.clickBack,
       movies = _ref.movies;
   var directorsMovies = movies.filter(function (m) {
-    return m.director.name === director.name;
+    return m.Director.Name === Director.Name;
   });
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "director-view"
-  }, /*#__PURE__*/_react.default.createElement("h2", null, " ", director.Name, " "), /*#__PURE__*/_react.default.createElement("p", null, " ", director.Bio, " "), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("small", null, "Birth: "), /*#__PURE__*/_react.default.createElement("p", null, director.Birth.slice(0, 10))), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("h2", null, " ", Director.Name, " "), /*#__PURE__*/_react.default.createElement("p", null, " ", Director.Bio, " "), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("small", null, "Birth: "), /*#__PURE__*/_react.default.createElement("p", null, Director.Birth.slice(0, 10))), /*#__PURE__*/_react.default.createElement("div", {
     className: "director-movies"
   }, /*#__PURE__*/_react.default.createElement("small", null, "Movies belonging to this director:"), directorsMovies.map(function (m, i) {
     return /*#__PURE__*/_react.default.createElement("p", {
@@ -54596,7 +54611,7 @@ function DirectorView(_ref) {
 }
 
 DirectorView.propTypes = {
-  director: _propTypes.default.shape({
+  Director: _propTypes.default.shape({
     Name: _propTypes.default.string.isRequired,
     Bio: _propTypes.default.string.isRequired,
     Birth: _propTypes.default.string.isRequired
@@ -54647,7 +54662,7 @@ function GenreView(props) {
       clickBack = props.clickBack,
       movies = props.movies;
   var genresMovies = movies.filter(function (m) {
-    return m.genre.name === genre.name;
+    return m.genre.Name === genre.Name;
   });
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "director-view"
@@ -55118,7 +55133,7 @@ var _movieView = _interopRequireDefault(require("../movie-view/movie-view"));
 
 var _registrationView = require("../registration-view/registration-view");
 
-var _directorView = _interopRequireDefault(require("../director-view/director-view"));
+var _directorView = require("../director-view/director-view");
 
 var _genreView = _interopRequireDefault(require("../genre-view/genre-view"));
 
@@ -55218,8 +55233,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "loginUser",
     value: function loginUser(authData) {
-      this.props.setUser(authData.user);
-      console.log(authData);
+      this.props.setUser(authData.user); // console.log(authData);
+
       this.setState({
         username: authData.user.username,
         token: authData.token
@@ -55371,7 +55386,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             username: username
           }), /*#__PURE__*/_react.default.createElement(_genreView.default, {
             genre: movies.find(function (m) {
-              return m.genre.name === match.params.name;
+              return m.Genre.Name === match.params.Name;
             }).genre,
             clickBack: function clickBack() {
               history.goBack();
@@ -55402,9 +55417,9 @@ var MainView = /*#__PURE__*/function (_React$Component) {
               return _this3.onLoggedOut();
             },
             username: username
-          }), /*#__PURE__*/_react.default.createElement(_directorView.default, {
+          }), /*#__PURE__*/_react.default.createElement(_directorView.DirectorView, {
             director: movies.find(function (m) {
-              return m.director.name === match.params.name;
+              return m.Director.Name === match.params.name;
             }).Director,
             clickBack: function clickBack() {
               history.goBack();
@@ -55521,7 +55536,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var store = (0, _redux.createStore)(_reducers.default);
+var store = (0, _redux.createStore)(_reducers.default, (0, _reduxDevtoolsExtension.devToolsEnhancer)());
 
 var MyFlixApplication = /*#__PURE__*/function (_React$Component) {
   _inherits(MyFlixApplication, _React$Component);
@@ -55578,7 +55593,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60873" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57807" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

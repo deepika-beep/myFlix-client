@@ -21,7 +21,7 @@ class MovieView extends React.Component {
   }
   //Set the text of the button for add/remove a movie when the page loads or refreshes based on the content of the favorite_movies array.
   componentDidMount() {
-    const favMovies = this.props.user.favoritemovies;
+    const favMovies = this.props.user.FavoriteMovies;
     const movieId = this.props.movie._id;
     if (favMovies.includes(movieId)) {
       this.setState({ buttonText: 'Remove from favorites' })

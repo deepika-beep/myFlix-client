@@ -15,7 +15,7 @@ function GenreView(props) {
 
   const { genre, clickBack, movies } = props;
 
-  const genresMovies = movies.filter(m => m.genre.name === genre.name)
+  const genresMovies = movies.filter(m => m.genre.Name === genre.Name)
 
 
   return (
