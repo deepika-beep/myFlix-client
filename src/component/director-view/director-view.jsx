@@ -11,7 +11,7 @@ const mapStateToProps = state => {
     const {movies} = state;
     return {movies};
 };
-function DirectorView({ Director, clickBack, movies }) {
+function DirectorView({clickBack, Director,movies}) {
 
     const directorsMovies = movies.filter(m => m.Director.Name === Director.Name)
     return (
@@ -26,7 +26,7 @@ function DirectorView({ Director, clickBack, movies }) {
 
             <div className="director-movies">
                     <small>Movies belonging to this director:</small>
-                    {directorsMovies.map((m, i) => <p key={m._id}> <Link to={`/movies/${m._id}`}>{m.title}</Link> </p> )}
+                    {directorsMovies.map((m, i) => <p key={m._id}> <Link to={`/movies/${m._id}`}>{m.Title}</Link> </p> )}
             </div> <hr />
             <Button variant="link"  onClick={() => { clickBack(); }}>Back</Button>
         </div>

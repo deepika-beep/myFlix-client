@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Container } from 'react-bootstrap';
-import { Button } from 'react-bootstrap/Button';
-import { Form } from 'react-bootstrap/Form';
+import  Button  from 'react-bootstrap/Button';
+import  Form  from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom';
-import { FormControl } from 'react-bootstrap';
+import { FormControl,FormGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import './profile-view.scss';
 // Get the movie array and the user from store
@@ -90,7 +90,7 @@ if (validateUser || validateEmail || validatePassword || validateDate) {
   alert('incorrect credentials');
   return false;
 }
-axios.put(`https://myflix-movies-api.herokuapp.com/users/${username}`,
+axios.put(`https://myflix-movies-api.herokuapp.com/users/${Username}`,
   {
     Username: newUsername,
     Password: newPassword,
@@ -111,7 +111,7 @@ axios.put(`https://myflix-movies-api.herokuapp.com/users/${username}`,
 }
 // delete account
 const deleteUser = () => {
-  axios.delete(`https://myflix-movies-api.herokuapp.com/users/${username}`, 
+  axios.delete(`https://myflix-movies-api.herokuapp.com/users/${Username}`, 
   {
     headers: { Authorization: `Bearer ${userToken}` }
   }).then(response => {
@@ -124,7 +124,7 @@ const deleteUser = () => {
 
 //  delete a film from fav
 const deleteMovie = (movieID) => {
-  axios.delete(`https://myflix-movies-api.herokuapp.com/users/${username}/Favorites/${movieID}`,
+  axios.delete(`https://myflix-movies-api.herokuapp.com/users/${Username}/Favorites/${movieID}`,
     {
       headers: { Authorization: `Bearer ${userToken}` }
     }).then(response => {
@@ -136,12 +136,12 @@ const deleteMovie = (movieID) => {
 
   }
   // filter the movies based on fav movies(array of movie_id)
-  const filteredMovies = movies.filter(m => {
-    return FavoriteMovies.indexof(m._id) >= 0;
-  });
+  // const filteredMovies = movies.filter(m => {
+  //   return FavoriteMovies.indexof(m._id) >= 0;
+  // });
   return (
     <div className="profile-view">
-      <h4>{`Welcome ${username}`}</h4> <hr />
+      <h4>{`Welcome ${Username}`}</h4> <hr />
       <div className="user-profile">
         <div className="user-info">
           <span className="user-label">Username:</span>
@@ -158,8 +158,8 @@ const deleteMovie = (movieID) => {
         <div className="user-info">
           <span className='label'>Favorite Movies:</span>
           <ul className='user'>
-            {filteredMovies.map((m, index) => <li key={index} className='fav-list'> <Link to={
-              `{/movies/${m._id}`}>{m.title}</Link> <button className="close" onClick={() => deleteMovie(m._id)} >&times;</button> </li>)}
+            {/* {filteredMovies.map((m, index) => <li key={index} className='fav-list'> <Link to={
+              `{/movies/${m._id}`}>{m.Title}</Link> <button className="close" onClick={() => deleteMovie(m._id)} >&times;</button> </li>)} */}
           </ul>
         </div>
       </div>
@@ -190,7 +190,7 @@ const deleteMovie = (movieID) => {
 
         <div className="feedback">{feedback}</div>
         <div className="button-wrapper">
-          <Button variant="primary" type="submit" onClick={updateUser} >Update details</Button>
+          <Button variant="primary" type="submit" onClick={() =>updateUser} >Update details</Button>
           <Button variant="danger" type="button" onClick={() => {
             if (confirm("Are you sure?")) {
               deleteUser();

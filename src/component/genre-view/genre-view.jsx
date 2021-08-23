@@ -15,8 +15,8 @@ function GenreView(props) {
 
   const { genre, clickBack, movies } = props;
 
-  const genresMovies = movies.filter(m => m.genre.Name === genre.Name)
-
+   const genresMovies = movies.filter(m => m.Genre.Name === genre.Name)
+console.log(genresMovies,"movies")
 
   return (
     <div className="director-view">
@@ -26,7 +26,7 @@ function GenreView(props) {
 
       <div className="genre-movies">
         <small>Movies belonging to this genre:</small>
-        {genresMovies.map((m, i) => <p key={m._id}> <Link to={`/movies/${m._id}`}>{m.title}</Link> </p>)}
+        {genresMovies.map((m, i) => <p key={m._id}> <Link to={`/movies/${m._id}`}>{m.Title}</Link> </p>)}
       </div> <hr />
       <Button variant="link" onClick={() => { clickBack(); }}>Back</Button>
     </div>

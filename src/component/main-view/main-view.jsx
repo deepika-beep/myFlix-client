@@ -10,7 +10,7 @@ import MovieList from '../movie-list/movie-list';
 import { MovieCard } from '../movie-card/movie-card';
 import  MovieView  from '../movie-view/movie-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import  { DirectorView }  from '../director-view/director-view';
+import   DirectorView   from '../director-view/director-view';
 import  GenreView  from '../genre-view/genre-view';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import  ProfileView  from '../profile-view/profile-view';
@@ -62,15 +62,15 @@ import './main-view.scss';
   // When a user enters the correct credentials, the backend sends back the token and username, which are used for two purposes. First, to update the user state so that the main view is rendered again and, secondly, to save authentication data in localStorage so that the next time you open your app, the browser remembers you’re already logged in.
   loginUser(authData) {
     this.props.setUser(authData.user)
-    // console.log(authData);
+    console.log(authData);
     this.setState({
-      username: authData.user.username,
+      username: authData.user.Username,
       token: authData.token,
     });
 
     localStorage.setItem('user', JSON.stringify(authData.user));
     localStorage.setItem('token', authData.token);
-    localStorage.setItem('username', authData.user.username);
+    localStorage.setItem('username', authData.user.Username);
     this.getMovies(authData.token);
   }
   // log out function-which deletes the token and the user from localStorage and clears the user state to null
@@ -105,7 +105,7 @@ import './main-view.scss';
     const { username, token } = this.state;
     const { movies } = this.props;
 
-
+console.log(movies);
     // calls the method when the button is clicked
 
     // display list of movie cards
@@ -114,6 +114,12 @@ import './main-view.scss';
     return (
       <Router>
         <Row className='main-view justify-content-md-center'>
+          {username&&
+            <Col><NavigationBar logOut={() => this.onLoggedOut()} username={username} />
+           </Col>
+          
+          }
+          
           {/* homepage */}
           <Route exact path='/' render={() => {
             if (!username) {
@@ -122,10 +128,11 @@ import './main-view.scss';
             </Col>
             }
             if (movies.length === 0) return <div className='main-view' />;
+           
             return <>
-              <NavigationBar logOut={() => this.onLoggedOut()} username={username} />
+              
               <MovieList movies={movies} />;
-            </>
+            </> 
           }} />
           {/* RegistrationView */}
           <Route path='/register' render={() => {
@@ -143,7 +150,7 @@ import './main-view.scss';
             }
             if (movies.length === 0) return <div className='main-view' />;
             return <Col md={12}>
-              <NavigationBar logOut={() => this.onLoggedOut()} username={username} />
+              {/* <NavigationBar logOut={() => this.onLoggedOut()} username={username} /> */}
               <MovieView movie={movies.find(m => m._id === match.params.movieId)} clickBack={() => history.goBack()} token={token} onMovieAddorDelete={(data) => this.onMovieAddOrDelete(data)} />
             </Col>
           }} />
@@ -156,8 +163,8 @@ import './main-view.scss';
             }
             if (movies.length === 0) return <div className='main-view' />;
             return <Col md={12}>
-              <NavigationBar logOut={() => this.onLoggedOut()} username={username} />
-              <GenreView genre={movies.find(m => m.Genre.Name === match.params.Name).genre} clickBack={() => {history.goBack()}} />
+              {/* <NavigationBar logOut={() => this.onLoggedOut()} username={username} /> */}
+              <GenreView genre={movies.find(m => m.Genre.Name === match.params.Name).Genre} clickBack={() => {history.goBack()}} />
             </Col>
           }} />
           {/* DirectorView */}
@@ -169,8 +176,8 @@ import './main-view.scss';
             }
             if (movies.length === 0) return <div className='main-view' />;
             return <Col md={12}>
-              <NavigationBar logOut={() => this.onLoggedOut()} username={username} />
-              <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} clickBack={() => {history.goBack()}} />
+              {/* <NavigationBar logOut={() => this.onLoggedOut()} username={username} /> */}
+              <DirectorView Director={ movies.find(m => m.Director.Name === match.params.Name).Director} clickBack={() => {history.goBack()}} />
             </Col>
           }} />
           {/* ProfileView */}
@@ -180,11 +187,11 @@ import './main-view.scss';
                 <LoginView onLoggedIn={(user) => this.loginUser(user)} />
               </Col>
             }
-            if (movies.length === 0) return <div className='main-view' />;
+            // if (movies.length === 0) return <div className='main-view' />;
             return <Col>
 
-              <NavigationBar logOut={() => this.onLoggedOut()} username={username} />
-              <ProfileView clickBack={() => {history.goBack()}} userToken={token} onDelete={this.onLoggedOut()} onUpdate={(data) => this.updateUser(data)} onMovieDelete={(data) => this.onMovieAddOrDelete(data)} />
+              {/* <NavigationBar logOut={() => this.onLoggedOut()} username={username} /> */}
+              <ProfileView clickBack={() => {history.goBack()}} userToken={token} onDelete={()=>this.onLoggedOut()} onUpdate={(data) => this.updateUser(data)} onMovieDelete={(data) => this.onMovieAddOrDelete(data)} />
             </Col>
           }} />
         </Row>

@@ -35,7 +35,7 @@ class MovieView extends React.Component {
     const { movie, clickBack, token, user, onMovieAddorDelete } = this.props;
     const { buttonText } = this.state
     const { username } = user
-
+    console.log(movie);
     // Add a movie to favorites
     const addMovie = () => {
       const userName = username;
@@ -110,7 +110,7 @@ class MovieView extends React.Component {
           <span className="value">{movie.Genre.Name}</span>
         </div><hr />
         <Button variant="link" onClick={() => { clickBack(); }}>Back</Button>
-        <Link to={`/Director/${movie.Director.name}`}>
+        <Link to={`/Director/${movie.Director.Name}`}>
           <Button variant="link">Director</Button>
         </Link>
         <Link to={`/Genre/${movie.Genre.Name}`}>
