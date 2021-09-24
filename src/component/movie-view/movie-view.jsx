@@ -120,8 +120,33 @@ class MovieView extends React.Component {
         {<Button variant="link" onClick={addRemove}>{buttonText}</Button>}
     </div>
   
+
     )
   }
+
+  render(){
+    const {movieData,onBackClick} = this.props;
+    return (
+       <Jumbotron fluid className="MovieView">
+    <div className = 'movie-view'>
+    <div className='movie-poster'>
+      <img src={movieData.ImagePath} />
+      </div>
+      <div className = 'movie-title'>
+        <span className = 'label'>Title:</span>
+        <span className = 'value'>{movieData.Title}</span>
+      </div>
+      <div className = 'movie-description'>
+      <span className = 'label'>Description:</span>
+      <span className = 'value'>{movieData.Description}</span>
+      </div>
+      
+      <button variant ='link' onClick = {() => {onBackClick(null);}}>Back</button>
+      </div>
+      </Jumbotron>
+  );
+}
+
 }
 {/* history.goBack() has been called, which means whenever you click on the back button  in “movie-view.jsx,” it will eventually call goBack() function in main-view */ }
 

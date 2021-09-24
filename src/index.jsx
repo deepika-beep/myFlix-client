@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Container from 'react-bootstrap/Container';
+
 import {createStore}from 'redux';
 import {Provider} from 'react-redux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
 import moviesApp from './reducers/reducers';
+
 // To import main-view into other index-jsx file
 import MainView from './component/main-view/main-view';
 // react-bootstrap components
@@ -16,11 +18,17 @@ const store = createStore(moviesApp,devToolsEnhancer());
 class MyFlixApplication extends React.Component{
   render(){
     return (
+
       <Provider store={store}>
       <Container>
       <MainView/>
       </Container>
       </Provider>
+
+      <Container>
+      <MainView/>
+      </Container>
+
     );
   }
 }

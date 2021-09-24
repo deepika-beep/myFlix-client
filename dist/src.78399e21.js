@@ -55568,11 +55568,16 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
 
 
+
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "59964" + '/');
+
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51180" + '/');
+
 
   ws.onmessage = function (event) {
     checkedAssets = {};
-    assetsToAccept = [];
+    assetsToAccept = []
+
 
     var data = JSON.parse(event.data);
 

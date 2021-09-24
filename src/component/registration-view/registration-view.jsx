@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
@@ -6,6 +7,10 @@ import Navbar from "react-bootstrap/Navbar";
 import Form from 'react-bootstrap/Form';
 import axios from "axios";
 import './registration-view.scss';
+
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 export function RegistrationView(props) {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
@@ -95,6 +100,7 @@ export function RegistrationView(props) {
   };
 
   return (
+
     <>
      <Navbar bg="dark" variant="dark" fixed="top">
             <Navbar.Brand href="#home">My Flix</Navbar.Brand>
@@ -106,10 +112,19 @@ export function RegistrationView(props) {
           onChange={(e) =>{ setUsername(e.target.value),validateUsername(e)}}
         />
           <span className="validation-feedback">{validateUser}</span> 
+
+    <Form className='Register-Form'>
+      <Form.Group controlId="formUsername">
+     <Form.Label>Username:</Form.Label>
+       <Form.Control type="text" placeholder ='enter Username' value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+
       </Form.Group>
 
       <Form.Group controlId="formPassword">
       <Form.Label>Create Password:</Form.Label>
+
        <Form.Control  type="password" placeholder ='enter password' value={Password}
           onChange={(e) => setPassword(e.target.value)}   
         />
@@ -139,6 +154,37 @@ export function RegistrationView(props) {
       <div className ='warning'>{warning}</div>
     </Form>
     </>
+
+       <Form.Control  type="password" placeholder ='enter password' value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        </Form.Group>
+       <Form.Group controlId="formGroupEmail">
+        <Form.Label> Email:</Form.Label>
+         
+          <Form.Control 
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          </Form.Group>
+      
+        <Form.Group controlId="formBirthday">
+            <Form.Label>Birthday:</Form.Label>
+         <Form.Control 
+            type="date"
+            value={birthday}
+            onChange={(e) => setBirthday(e.target.value)}
+          />
+          </Form.Group>
+      
+      <button type="submit" onClick={handleSubmit}>
+        Submit
+      </button>
+      {/* <button onClick={() => { onBackClick(null); }}>Back</button> */}
+      <button type='button' onClick={props.toggleForms}>If you have an Account login</button>
+    </Form>
+
   );
 }
 
